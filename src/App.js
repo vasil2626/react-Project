@@ -1,21 +1,19 @@
 import React from 'react';
 import './App.css';
+import Residence from './location/loc';
+import Names from './names/names';
+import Prof from './profesion/profesion';
 
 
-function Name (props){
-  return (
-    <div>
-      {props.name.toUpperCase()}
-    </div>
-    
-  );
-}
+
 
 function App() {
   return (
     <div className="App">
-      <h3>hello</h3>
-      < Name  name= "johan"/>
+     <Names name="john" surname="smith" age="80"/>
+     <Prof prof="web developer"/>
+     <Residence res="u.s.a"/>
+      
       
     </div>
   );
