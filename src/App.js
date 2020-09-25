@@ -2,6 +2,8 @@ import React from 'react';
 import './App.css';
 import Residence from './location/loc';
 import Names from './names/names';
+import Price from './Product/Price';
+import Product from './Product/Product';
 import Prof from './profesion/profesion';
 
 
@@ -10,9 +12,11 @@ import Prof from './profesion/profesion';
 function App() {
   return (
     <div className="App">
-     <Names name="john" surname="smith" age="80"/>
+     {/* <Names name="john" surname="smith" age="80"/>
      <Prof prof="web developer"/>
-     <Residence res="u.s.a"/>
+     <Residence res="u.s.a" /> */}
+     <Product name=" Banan" price=" 50$" des=" Fresh bananas from Ecuador"/>
+     {/* <Price price="50$" /> */}
       
       
     </div>
