@@ -1,15 +1,13 @@
 import React, { Component } from "react";
 
-
-class Price extends Component {
+class Name extends Component {
     render(){
         return(
             <div>
-                {this.props.price}
+                {this.props.name}
             </div>
-            
         );
     };
 }
 
-export default Price;
+export default Name;

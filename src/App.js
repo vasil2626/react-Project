@@ -15,7 +15,7 @@ function App() {
      {/* <Names name="john" surname="smith" age="80"/>
      <Prof prof="web developer"/>
      <Residence res="u.s.a" /> */}
-     <Product name=" Banan" price=" 50$" des=" Fresh bananas from Ecuador"/>
+     <Product name="Banan" price="50$" description="Fresh bananas from Ecuador"/>
      {/* <Price price="50$" /> */}
       
       

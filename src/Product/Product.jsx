@@ -1,26 +1,24 @@
 import React, { Component } from 'react';
 import Description from './Description';
+import Name from './Name';
 import Price from './Price'
 
 
-class Product extends React.Component {
+class Product extends Component {
     render() {
-        this.price = <Price />
-        this.des = <Description />
         return (
-            <div>  
-                    Product Name  {this.props.name}<br/>
-                    Product Price{this.props.price}<br/>
-                    Product Description {this.props.des}
+            <div>
+                <div>
+                        Product name <Name name={this.props.name}/> 
+                        Price <Price price={this.props.price}/>
+                        Description <Description description={this.props.description} />
+                  
+                </div>
+
             </div>
-
-
-
-
-
-
         );
     };
+
 
 }
 
