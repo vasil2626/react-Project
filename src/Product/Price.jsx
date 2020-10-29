@@ -7,7 +7,8 @@ constructor(props){
 
     this.state = {
         price: props.price,
-        reat: 490
+        reat: props.reat,
+        name: props.name
     };
 }
 buttonClick = ()=> {
@@ -16,13 +17,15 @@ buttonClick = ()=> {
     if(sign === '$'){
         let amd =  parseFloat(price)* reat + '֏';
         this.setState({
-            price: amd,
+            price: amd
+           
         }) 
     }
     else if(sign === '֏'){
         let usd =  parseFloat(price) /  reat + '$';
         this.setState({
-            price: usd,
+            price: usd
+            
         }) 
     } 
 }
@@ -30,7 +33,7 @@ buttonClick = ()=> {
         return(
             <div>
                 <p>
-                {this.state.price}
+                {this.state.price + this.state.name}
                 </p>
                 <button onClick={this.buttonClick} >
                 Click

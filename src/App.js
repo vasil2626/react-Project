@@ -16,7 +16,10 @@ function App() {
      <Prof prof="web developer"/>
      <Residence res="u.s.a" /> */}
      {/* <Product /> */}
-     <Price price="10$" />
+     <Price 
+     price="10$"
+     reat={ 480 }
+     name= " Banan"/>
       
       
     </div>
