@@ -10,8 +10,8 @@ class Product extends Component {
             <div>
                 <div>
                         <Name name={this.props.name}/>  
-                        <Price price={this.props.price}/>
-                        <Description  desc={this.props.desc}/> 
+                        <Price price={this.props.price} reat={this.props.reat}  />
+                        <Description desc={this.props.desc}/> 
                   
                 </div>
 

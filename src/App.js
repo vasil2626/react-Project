@@ -1,8 +1,10 @@
 import React from 'react';
 import './App.css';
+import ToDo from './Components/ToDo';
+// import Description from './Product/Description';
 // import Residence from './location/loc';
 // import Names from './names/names';
-import Price from './Product/Price';
+// import Price from './Product/Price';
 // import Product from './Product/Product';
 // import Prof from './profesion/profesion';
 
@@ -16,12 +18,12 @@ function App() {
      <Prof prof="web developer"/>
      <Residence res="u.s.a" /> */}
      {/* <Product /> */}
-     <Price 
+     {/* <Price 
      price="10$"
      reat={ 480 }
-     name= " Banan"/>
-      
-      
+     name= " Banan"
+     /> */}
+     <ToDo/>
     </div>
   );
 }

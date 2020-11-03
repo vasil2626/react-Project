@@ -9,6 +9,7 @@ constructor(props){
         price: props.price,
         reat: props.reat,
         name: props.name
+        
     };
 }
 buttonClick = ()=> {
