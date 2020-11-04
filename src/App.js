@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import ToDo from './Components/ToDo';
 // import Description from './Product/Description';
 // import Residence from './location/loc';
