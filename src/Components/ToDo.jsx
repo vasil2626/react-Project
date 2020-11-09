@@ -25,9 +25,7 @@ class ToDo extends Component {
     }
     render() {
         let { inputValue, task } = this.state
-        if (this.inputValu === false) {
-            return
-        }
+        
         return (
             <div className='container'>
                 <div className={styles.page} >
