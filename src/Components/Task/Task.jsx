@@ -12,6 +12,9 @@ class Task extends Component {
         return(
             <Card className={styles.card}>
             <Card.Body>
+                <input 
+                type='checkbox'
+                onClick={() =>this.props.onCheck(task._id)}/>
                 <Card.Title>{task.value.slice(0, 5)}...</Card.Title>
                 <Card.Text>
                     {task.value.slice(0, 5)}...

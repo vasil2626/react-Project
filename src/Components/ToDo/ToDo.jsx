@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FormControl, InputGroup, Button, Container, Row, Col} from 'react-bootstrap';
+import { FormControl, InputGroup, Button, Container, Row, Col } from 'react-bootstrap';
 import styles from './toDo.module.css';
 import idGenerator from '../../Support/idGenerator'
 import Task from '../Task/Task';
@@ -9,7 +9,8 @@ import Task from '../Task/Task';
 class ToDo extends Component {
     state = {
         inputValue: '',
-        task: []
+        task: [],
+        selected: []
     };
 
     handleChange = (event) => {
@@ -40,10 +41,20 @@ class ToDo extends Component {
         })
     }
     removeTask = (taskid) => {
-        let newTasls = this.state.task.filter((task)=> taskid !== task._id)
+        let newTasks = this.state.task.filter((task) => taskid !== task._id)
         this.setState({
-            task: newTasls
+            task: newTasks
         })
+    }
+    handleCheck = (taskid) => {
+        console.log(taskid);
+        let selected = [...this.state.selected];
+        
+        selected.push(taskid);
+        this.setState({
+            selected
+        })
+
     }
 
     render() {
@@ -53,9 +64,10 @@ class ToDo extends Component {
         let card = this.state.task.map((task) => {
             return (
                 <Col key={task._id} xs={12} sm={6} md={4} lg={3} xl={2}>
-                   <Task 
-                   data={task}
-                   onRemove={this.removeTask}  />
+                    <Task
+                        data={task}
+                        onRemove={this.removeTask}
+                        onCheck={this.handleCheck} />
                 </Col>
             )
         })
