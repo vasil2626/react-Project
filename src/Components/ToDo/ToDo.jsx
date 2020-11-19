@@ -10,7 +10,7 @@ class ToDo extends Component {
     state = {
         inputValue: '',
         task: [],
-        selected: []
+        selected: new Set()
     };
 
     handleChange = (event) => {
@@ -48,18 +48,33 @@ class ToDo extends Component {
     }
     handleCheck = (taskid) => {
         console.log(taskid);
-        let selected = [...this.state.selected];
-        
-        selected.push(taskid);
+        let selected = new Set(this.state.selected);
+        if (selected.has(taskid)) {
+            selected.delete(taskid)
+        }
+        else {
+            selected.add(taskid)
+        };
         this.setState({
             selected
         })
 
-    }
+    };
+    removeSelectid = (taskid) => {
+        console.log(this.state.selected);
+        let task = [ ...this.state.task];
+        this.state.selected.forEach((id) =>{
+            task = task.filter((task) => task._id !== id);
+            this.setState({
+                task,
+                selected: new Set()
+            })
+        })
+    };
 
     render() {
 
-        let { inputValue } = this.state;
+        let { inputValue, selected } = this.state;
 
         let card = this.state.task.map((task) => {
             return (
@@ -99,6 +114,17 @@ class ToDo extends Component {
                         </Row>
                         <Row >
                             {card}
+                        </Row>
+                        <Row className='justify-content-center'>
+                            <Col xs={4}>
+                                <Button
+                                    variant='outline-danger'
+                                    onClick={this.removeSelectid}
+                                    disabled={!selected.size}>
+                                    Remove Task
+                            </Button>
+                            </Col>
+
                         </Row>
                     </Container>
                 </div>
