@@ -1,9 +1,7 @@
 .card{
     margin: 15px auto;
 }
-.input{
-    margin-bottom: 15px;
-}
+
 .edit{
     margin: 5px;
     color: #fff;
@@ -11,4 +9,8 @@
 .delete{
     margin: 5px;
  
+}
+
+.selected{
+    border: 1px solid red;
 }

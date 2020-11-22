@@ -1,16 +1,20 @@
-import React, { Component } from 'react';
-import { FormControl, InputGroup, Button, Container, Row, Col } from 'react-bootstrap';
+import React, { PureComponent } from 'react';
+import { Button, Container, Row, Col } from 'react-bootstrap';
 import styles from './toDo.module.css';
 import idGenerator from '../../Support/idGenerator'
 import Task from '../Task/Task';
+import AddTask from '../Addtask/AddTask';
+import Confirm from '../Confirm/Confirm';
+import EditTaskModal from '../EditTaskModal/EditTaskModal';
 
 
 
-class ToDo extends Component {
+class ToDo extends PureComponent {
     state = {
-        inputValue: '',
         task: [],
-        selected: new Set()
+        selected: new Set(),
+        showConfirm: false,
+        editTask: null
     };
 
     handleChange = (event) => {
@@ -24,20 +28,17 @@ class ToDo extends Component {
             this.handleClick();
         }
     }
-    handleClick = (event) => {
-        let { inputValue } = this.state;
-        if (!inputValue) {
-            return;
-        }
+    handleClick = (value) => {
+
         let newTask = {
-            value: inputValue,
+            value: value,
             _id: idGenerator()
         };
 
         let task = [newTask, ...this.state.task]
         this.setState({
-            task: task,
-            inputValue: ''
+            task: task
+
         })
     }
     removeTask = (taskid) => {
@@ -47,7 +48,6 @@ class ToDo extends Component {
         })
     }
     handleCheck = (taskid) => {
-        console.log(taskid);
         let selected = new Set(this.state.selected);
         if (selected.has(taskid)) {
             selected.delete(taskid)
@@ -61,20 +61,32 @@ class ToDo extends Component {
 
     };
     removeSelectid = (taskid) => {
-        console.log(this.state.selected);
-        let task = [ ...this.state.task];
-        this.state.selected.forEach((id) =>{
+        let task = [...this.state.task];
+        this.state.selected.forEach((id) => {
             task = task.filter((task) => task._id !== id);
             this.setState({
                 task,
-                selected: new Set()
-            })
-        })
+                selected: new Set(),
+                showConfirm: false
+            });
+
+        });
     };
+    toggleConfirm = () => {
+        this.setState({
+            showConfirm: !this.state.showConfirm
+
+        });
+    };
+    toggleEdit = (task) =>{
+        this.setState({
+            editTask: task
+        })
+    }
 
     render() {
 
-        let { inputValue, selected } = this.state;
+        let { selected, showConfirm, editTask } = this.state;
 
         let card = this.state.task.map((task) => {
             return (
@@ -82,7 +94,9 @@ class ToDo extends Component {
                     <Task
                         data={task}
                         onRemove={this.removeTask}
-                        onCheck={this.handleCheck} />
+                        onCheck={this.handleCheck}
+                        onEdit = {this.toggleEdit}
+                    />
                 </Col>
             )
         })
@@ -91,42 +105,41 @@ class ToDo extends Component {
             <>
                 <div className={styles.toDo}>
                     < Container>
-                        <Row className='justify-content-center'>
+                        <Row className={`${styles.buttonRemove} 'justify-content-center'`}>
                             <Col sm={8} xs={6} md={12} es={4}>
-                                <InputGroup className={styles.input}>
-                                    <FormControl
-                                        placeholder="Add Task"
-                                        aria-label="Recipient's username"
-                                        aria-describedby="basic-addon2"
-                                        value={inputValue}
-                                        onChange={this.handleChange}
-                                        onKeyDown={this.handleKeyDown}
-                                    />
-                                    <InputGroup.Append>
-                                        <Button variant="outline-primary"
-                                            onClick={this.handleClick}
-                                            disabled={!inputValue}>
-                                            Add
-                                                </Button>
-                                    </InputGroup.Append>
-                                </InputGroup>
+                                <AddTask
+                                    onAdd={this.handleClick} />
                             </Col>
                         </Row>
                         <Row >
                             {card}
                         </Row>
-                        <Row className='justify-content-center'>
+                        <Row className='justify-content-md-center'>
                             <Col xs={4}>
                                 <Button
                                     variant='outline-danger'
-                                    onClick={this.removeSelectid}
+                                    onClick={this.toggleConfirm}
                                     disabled={!selected.size}>
                                     Remove Task
                             </Button>
                             </Col>
-
                         </Row>
                     </Container>
+                    {showConfirm &&
+                        < Confirm
+                            onSubmit={this.removeSelectid}
+                            onClose={this.toggleConfirm}
+                            count={selected.size}
+                        />}
+                    {!!editTask &&
+                        <EditTaskModal 
+                        data={editTask}
+                        onSave = {() =>{console.log('save');}}
+                        onClose = {() => {this.toggleEdit(null)}}
+
+                        />
+                    }
+
                 </div>
             </>
         );
