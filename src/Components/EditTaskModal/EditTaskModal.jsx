@@ -1,4 +1,3 @@
-/* eslint-disable react/react-in-jsx-scope */
 import React,{ PureComponent } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
@@ -40,7 +39,7 @@ render(){
     >
      
       <Modal.Header closeButton>
-        <Modal.Title>Edit Task</Modal.Title>
+        <Modal.Title >Edit Task</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <input 

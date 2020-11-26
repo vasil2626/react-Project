@@ -18,12 +18,15 @@ class AddTask extends PureComponent {
             this.handleClick();
         }
     }
-    handleClick = (event) => {
+    handleClick = () => {
         let { inputValue } = this.state;
         if (!inputValue) {
             return;
         }
-        this.props.onAdd(inputValue);
+        let task = {
+            title: inputValue
+        };
+        this.props.onAdd(task);
         this.setState({
             inputValue: ''
         })

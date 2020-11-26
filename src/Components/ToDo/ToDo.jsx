@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Button, Container, Row, Col } from 'react-bootstrap';
 import styles from './toDo.module.css';
-import idGenerator from '../../Support/idGenerator'
+
 import Task from '../Task/Task';
 import AddTask from '../Addtask/AddTask';
 import Confirm from '../Confirm/Confirm';
@@ -28,19 +28,26 @@ class ToDo extends PureComponent {
             this.handleClick();
         }
     }
-    handleClick = (value) => {
-
-        let newTask = {
-            value: value,
-            _id: idGenerator()
-        };
-
-        let task = [newTask, ...this.state.task]
-        this.setState({
-            task: task
-
+    handleClick = (data) => {
+        
+        let body = JSON.stringify(data)
+        fetch("http://localhost:3001/task", {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body:body
         })
-    }
+
+        .then((res) =>{res.json()})
+        .then((respons) =>{
+            let tasks =[respons,...this.state.task]
+            this.setState({
+                task:tasks
+            });
+        });
+      
+  };
     removeTask = (taskid) => {
         let newTasks = this.state.task.filter((task) => taskid !== task._id)
         this.setState({
@@ -78,12 +85,21 @@ class ToDo extends PureComponent {
 
         });
     };
-    toggleEdit = (task) =>{
+    toggleEdit = (task) => {
         this.setState({
             editTask: task
         })
     }
+    saveTask = (editTask) => {
+        let task = [...this.state.task];
+        let foundTask = task.findIndex((task) => task._id === editTask._id);
+        task[foundTask] = editTask
+        this.setState({
+            task: task
 
+        });
+        this.toggleEdit();
+    };
     render() {
 
         let { selected, showConfirm, editTask } = this.state;
@@ -95,7 +111,7 @@ class ToDo extends PureComponent {
                         data={task}
                         onRemove={this.removeTask}
                         onCheck={this.handleCheck}
-                        onEdit = {this.toggleEdit}
+                        onEdit={this.toggleEdit}
                     />
                 </Col>
             )
@@ -114,7 +130,7 @@ class ToDo extends PureComponent {
                         <Row >
                             {card}
                         </Row>
-                        <Row className='justify-content-md-center'>
+                        <Row className='justify-content-center'>
                             <Col xs={4}>
                                 <Button
                                     variant='outline-danger'
@@ -132,11 +148,10 @@ class ToDo extends PureComponent {
                             count={selected.size}
                         />}
                     {!!editTask &&
-                        <EditTaskModal 
-                        data={editTask}
-                        onSave = {() =>{console.log('save');}}
-                        onClose = {() => {this.toggleEdit(null)}}
-
+                        <EditTaskModal
+                            data={editTask}
+                            onSave={this.saveTask}
+                            onClose={() => { this.toggleEdit(null) }}
                         />
                     }
 

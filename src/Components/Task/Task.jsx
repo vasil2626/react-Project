@@ -19,16 +19,19 @@ class Task extends PureComponent {
 }
 render(){
     let task = this.props.data
+    console.log(task);
     let {onCheckt} = this.state;
     return (
-        <Card className={`${styles.card} ${onCheckt ? styles.selected: null}`} >
+        <Card 
+        border="warning"
+        className={`${styles.card} ${onCheckt ? styles.selected: null}`} >
             <Card.Body>
                 <input
                     type='checkbox'
                     onClick={this.hendleCheck} />
-                <Card.Title>{task.value.slice(0, 5)}...</Card.Title>
+                <Card.Title>{task.title}</Card.Title>
                 <Card.Text>
-                    {task.value.slice(0, 5)}...
+                    {task.description}
                 </Card.Text>
                 <Button 
                 variant="warning" 
