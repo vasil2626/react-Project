@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Button, Container, Row, Col } from 'react-bootstrap';
 import styles from './toDo.module.css';
-
 import Task from '../Task/Task';
 import AddTask from '../Addtask/AddTask';
 import Confirm from '../Confirm/Confirm';
@@ -39,7 +38,7 @@ class ToDo extends PureComponent {
             body:body
         })
 
-        .then((res) =>{res.json()})
+        .then((res) => res.json())
         .then((respons) =>{
             let tasks =[respons,...this.state.task]
             this.setState({
