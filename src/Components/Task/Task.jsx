@@ -14,48 +14,47 @@ class Task extends PureComponent {
         this.setState = ({
             checked: !this.state.checked
         });
-        let {onCheck, data} = this.props;
+        let { onCheck, data } = this.props;
         onCheck(data._id);
-}
-render(){
-    let task = this.props.data
-    console.log(task);
-    let {onCheckt} = this.state;
-    return (
-        <Card 
-        border="warning"
-        className={`${styles.card} ${onCheckt ? styles.selected: null}`} >
-            <Card.Body>
-                <input
-                    type='checkbox'
-                    onClick={this.hendleCheck} />
-                <Card.Title>{task.title}</Card.Title>
-                <Card.Text>
-                    {task.description}
-                </Card.Text>
-                <Button 
-                variant="warning" 
-                className={styles.edit}
-                onClick={()=>this.props.onEdit(task)}
-                >
-                    <FontAwesomeIcon icon={faEdit} />
-                </Button>
-                <Button
-                    variant="danger"
-                    className={styles.delete}
-                    onClick={() => this.props.onRemove(task._id)}>
-                    <FontAwesomeIcon icon={faTrash} />
-                </Button>
-            </Card.Body>
-        </Card>
-    );
-};
+    }
+    render() {
+        let task = this.props.data
+        let { onCheckt } = this.state;
+        return (
+            <Card
+                border="warning"
+                className={`${styles.card} ${onCheckt ? styles.selected : null}`} >
+                <Card.Body>
+                    <input
+                        type='checkbox'
+                        onClick={this.hendleCheck} />
+                    <Card.Title>{task.title}</Card.Title>
+                    <Card.Text>
+                        {task.description}
+                    </Card.Text>
+                    <Button
+                        variant="warning"
+                        className={styles.edit}
+                        onClick={() => this.props.onEdit(task)}
+                    >
+                        <FontAwesomeIcon icon={faEdit} />
+                    </Button>
+                    <Button
+                        variant="danger"
+                        className={styles.delete}
+                        onClick={() => this.props.onRemove(task._id)}>
+                        <FontAwesomeIcon icon={faTrash} />
+                    </Button>
+                </Card.Body>
+            </Card>
+        );
+    };
 };
 Task.propTypes = {
     data: PropTypes.object.isRequired,
     onRemove: PropTypes.func.isRequired,
     onCheck: PropTypes.func.isRequired,
-    
+
 }
 
 export default Task;

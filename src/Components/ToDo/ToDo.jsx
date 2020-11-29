@@ -16,6 +16,28 @@ class ToDo extends PureComponent {
         editTask: null
     };
 
+
+    componentDidMount() {
+        fetch("http://localhost:3001/task", {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json"
+            },
+        })
+            .then((respons) => respons.json())
+            .then((res) => {
+                if (res.error) {
+                    throw res.erroe
+                }
+                this.setState({
+                    task: res
+                })
+            })
+            .catch((error) => {
+                new Error('Bad Request', error)
+            })
+    }
+
     handleChange = (event) => {
         this.setState({
             inputValue: event.target.value
@@ -28,31 +50,56 @@ class ToDo extends PureComponent {
         }
     }
     handleClick = (data) => {
-        
+
         let body = JSON.stringify(data)
         fetch("http://localhost:3001/task", {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
             },
-            body:body
+            body: body
         })
 
-        .then((res) => res.json())
-        .then((respons) =>{
-            let tasks =[respons,...this.state.task]
-            this.setState({
-                task:tasks
+            .then((res) => res.json())
+            .then((respons) => {
+                let tasks = [respons, ...this.state.task]
+                this.setState({
+                    task: tasks
+                });
+            })
+            .catch((error) => {
+                throw error = new Error('Request error')
             });
-        });
-      
-  };
-    removeTask = (taskid) => {
-        let newTasks = this.state.task.filter((task) => taskid !== task._id)
-        this.setState({
-            task: newTasks
-        })
+
+
     }
+    removeTask = (taskid) => {
+        fetch(`"http://localhost:3001/task${taskid}`,{
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json"
+            }
+            
+            .then((res) => res.json())
+            .then((respons) => {
+                let newTasks = this.state.task.filter((task) => taskid !== task._id)
+                this.setState({
+                    task: newTasks
+                });
+            })
+            .catch((error) => {
+                throw error = new Error('Request error')
+            })
+        })
+
+
+                // let newTasks = this.state.task.filter((task) => taskid !== task._id)
+                // this.setState({
+                //     task: newTasks
+          
+ 
+}
+
     handleCheck = (taskid) => {
         let selected = new Set(this.state.selected);
         if (selected.has(taskid)) {
