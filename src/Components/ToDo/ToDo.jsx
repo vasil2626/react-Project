@@ -74,31 +74,25 @@ class ToDo extends PureComponent {
 
     }
     removeTask = (taskid) => {
-        fetch(`"http://localhost:3001/task${taskid}`,{
+        fetch(`http://localhost:3001/task/${taskid}`, {
             method: 'DELETE',
             headers: {
                 "Content-Type": "application/json"
             }
-            
+        })
             .then((res) => res.json())
             .then((respons) => {
-                let newTasks = this.state.task.filter((task) => taskid !== task._id)
+                if (respons.error) {
+                    throw respons.error
+                }
+                let newTasks = this.state.task.filter((task) => task._id !== taskid)
                 this.setState({
                     task: newTasks
                 });
             })
-            .catch((error) => {
-                throw error = new Error('Request error')
-            })
-        })
+            .catch((error) => console.log("Error", error));
 
-
-                // let newTasks = this.state.task.filter((task) => taskid !== task._id)
-                // this.setState({
-                //     task: newTasks
-          
- 
-}
+    }
 
     handleCheck = (taskid) => {
         let selected = new Set(this.state.selected);
@@ -114,16 +108,35 @@ class ToDo extends PureComponent {
 
     };
     removeSelectid = (taskid) => {
-        let task = [...this.state.task];
-        this.state.selected.forEach((id) => {
-            task = task.filter((task) => task._id !== id);
-            this.setState({
-                task,
-                selected: new Set(),
-                showConfirm: false
-            });
+        let body = {
+            tasks: [...this.state.selected]
+        }
+        fetch(`http://localhost:3001/task`, {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        })
+            .then((res) => res.json())
+            .then((respons) => {
+                if (respons.error) {
+                    throw respons.error
+                }
+                let task = [...this.state.task];
+                this.state.selected.forEach((id) => {
+                    task = task.filter((task) => task._id !== id);
+                    this.setState({
+                        task,
+                        selected: new Set(),
+                        showConfirm: false
+                    });
 
-        });
+                });
+
+            })
+            .catch((error) => console.log("Error", error))
+
     };
     toggleConfirm = () => {
         this.setState({
@@ -137,14 +150,29 @@ class ToDo extends PureComponent {
         })
     }
     saveTask = (editTask) => {
-        let task = [...this.state.task];
-        let foundTask = task.findIndex((task) => task._id === editTask._id);
-        task[foundTask] = editTask
-        this.setState({
-            task: task
+        fetch(`http://localhost:3001/task/${editTask._id}`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(editTask)
+        })
+            .then((res) => res.json())
+            .then((respons) => {
+                if (respons.error) {
+                    throw respons.error
+                }
+                let task = [...this.state.task];
+                let foundTask = task.findIndex((task) => task._id === editTask._id);
+                task[foundTask] = editTask
+                this.setState({
+                    task: task
 
-        });
-        this.toggleEdit();
+                });
+                this.toggleEdit();
+            })
+            .catch((error) => console.log("Error", error))
+
     };
     render() {
 

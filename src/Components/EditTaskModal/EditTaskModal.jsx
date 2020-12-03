@@ -15,19 +15,19 @@ class EditTaskModal extends PureComponent{
   };
   handleCahng = (event) =>{
     this.setState({
-      value : event.target.value
+      title : event.target.value
     });
   };
   handleSave = () => {
-    let{value} =this.state;
-    if(!value){
+    let{title} =this.state;
+    if(!title){
       return;
     }
     this.props.onSave(this.state)
   };
 render(){
   let {props} = this;
-  let{value} = this.state;
+  let{title} = this.state;
   return (
 
     < Modal
@@ -45,7 +45,7 @@ render(){
         <input 
         type = "text"
         className = {styles.editInput}
-        value = {value}
+        value = {title}
         onChange={this.handleCahng}
         />
       </Modal.Body>
