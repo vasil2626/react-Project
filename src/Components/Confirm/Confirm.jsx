@@ -26,7 +26,8 @@ function Confirm(props) {
           </Button>
         <Button 
         variant="outline-danger" 
-        onClick={props.onClose}>
+        onClick={props.onClose}
+        >
           Close
           </Button>
       </Modal.Footer>
