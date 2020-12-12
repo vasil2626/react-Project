@@ -2,14 +2,20 @@ import React, { PureComponent } from 'react';
 import { FormControl, InputGroup, Button, Modal } from 'react-bootstrap';
 import styles from './Addtasks.module.css';
 import PropTypes from 'prop-types';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 class AddTask extends PureComponent {
     state = {
-        inputValue: ''
+        title: '',
+        description: '',
+        startDate: new Date()
     }
+
     handleChange = (event) => {
+        let {name, value} = event.target
         this.setState({
-            inputValue: event.target.value
+            [name]: value
         })
     }
 
@@ -19,22 +25,19 @@ class AddTask extends PureComponent {
         }
     }
     handleClick = () => {
-        let { inputValue } = this.state;
-        if (!inputValue) {
+        let { title, description } = this.state;
+        if (! title ) {
             return;
         }
         let task = {
-            title: inputValue
+            title: title,
+            description: description,
         };
         this.props.onAdd(task);
-        this.setState({
-            inputValue: ''
-        })
     }
 
     render() {
-
-        let { inputValue } = this.state;
+        
         return (
             <>
                 <Modal
@@ -43,38 +46,50 @@ class AddTask extends PureComponent {
                     centered
                 >
                     <Modal.Header closeButton>
-                        <Modal.Title>Modal Header</Modal.Title>
+                        <Modal.Title>Add New Task</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <InputGroup className={styles.input}>
-                            <FormControl
-                                placeholder="Add Task"
-                                aria-label="Recipient's username"
-                                aria-describedby="basic-addon2"
-                                value={inputValue}
-                                onChange={this.handleChange}
-                                onKeyDown={this.handleKeyDown}
-                            />
-                        </InputGroup>
+                        <div>
+                            <InputGroup className={styles.input}>
+                                <FormControl
+                                    placeholder="Add Task"
+                                    name="title"
+                                    onChange={this.handleChange}
+                                    onKeyDown={this.handleKeyDown}
+                                />
+                            </InputGroup>
+                        </div>
+                        <div>
+                            <textarea 
+                            className={styles.area}
+                            name="description"
+                            onChange={this.handleChange} 
+                            rows='5'
+                            placeholder="Task Description"
+                            >
+                            </textarea>
+                        </div>
+                        <div>
+                         <DatePicker
+                          selected={this.state.startDate}
+                        />
+                        </div>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button
-                            variant="secondary"
-                            onClick={() => this.props.onClose()}
-                            >
-                            Close
+                            variant="success"
+                            onClick={this.handleClick}
+                        >
+                            Save Task
                         </Button>
                         <Button
-                            variant="primary"
-                            onClick={() =>this.props.onAdd()}
+                            variant="danger"
+                            onClick={() => this.props.onClose()}
                         >
-                            Save Changes
+                            Close
                         </Button>
                     </Modal.Footer>
                 </Modal>
-
-
-
 
             </>
 

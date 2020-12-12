@@ -64,7 +64,8 @@ class ToDo extends PureComponent {
             .then((respons) => {
                 let tasks = [respons, ...this.state.task]
                 this.setState({
-                    task: tasks
+                    task: tasks,
+                    newTaskModal: !this.state.newTaskModal     
                 });
             })
             .catch((error) => {
@@ -183,7 +184,7 @@ class ToDo extends PureComponent {
     }
 
     render() {
-
+        
         let { selected, showConfirm, editTask, newTaskModal } = this.state;
 
         let card = this.state.task.map((task) => {
@@ -208,6 +209,7 @@ class ToDo extends PureComponent {
                                 <Button
                                 variant='outline-success'
                                 onClick={this.toggleNewTask}
+                                disabled={selected.size}
                                 >
                                     Add Task
                                     </Button>
@@ -230,7 +232,7 @@ class ToDo extends PureComponent {
                         <Row >
                             {card}
                         </Row>
-             
+                        
                     </Container>
                     {showConfirm &&
                         < Confirm

@@ -51,13 +51,13 @@ render(){
       </Modal.Body>
       <Modal.Footer>
         <Button 
-        variant ="outline-warning"
+        variant ="warning"
         onClick = {this.handleSave}
         >
           Edit
           </Button>
         <Button 
-        variant = "outline-danger" 
+        variant = "danger" 
         onClick = {props.onClose}>
           Cancele
           </Button>

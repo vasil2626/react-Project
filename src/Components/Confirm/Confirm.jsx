@@ -19,13 +19,13 @@ function Confirm(props) {
       </Modal.Header>
       <Modal.Footer>
         <Button 
-        variant="outline-warning"
+        variant="warning"
         onClick={props.onSubmit}
         >
           Delete Tasks
           </Button>
         <Button 
-        variant="outline-danger" 
+        variant="danger" 
         onClick={props.onClose}
         >
           Close
