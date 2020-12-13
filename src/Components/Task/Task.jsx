@@ -5,6 +5,7 @@ import { Button, Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
+import {formatDate} from '../../Support/utilit';
 
 class Task extends PureComponent {
     state = {
@@ -22,7 +23,6 @@ class Task extends PureComponent {
         let { onCheckt } = this.state;
         return (
             <Card
-                border="warning"
                 className={`${styles.card} ${onCheckt ? styles.selected : null}`} >
                 <Card.Body>
                     <input
@@ -30,7 +30,16 @@ class Task extends PureComponent {
                         onClick={this.hendleCheck} />
                     <Card.Title>{task.title}</Card.Title>
                     <Card.Text>
+                        Deskription:
                         {task.description}
+                    </Card.Text>
+                    <Card.Text className={styles.data}>
+                        Date:
+                        {formatDate(task.date)}
+                    </Card.Text>
+                    <Card.Text className={styles.data}>
+                        Created_at:
+                        {formatDate(task.created_at)}
                     </Card.Text>
                     <Button
                         variant="warning"

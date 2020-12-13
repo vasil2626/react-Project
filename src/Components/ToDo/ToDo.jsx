@@ -250,7 +250,8 @@ class ToDo extends PureComponent {
                     {  newTaskModal && 
                           <AddTask
                           onAdd={this.handleClick}
-                          onClose={this.toggleNewTask} />
+                          onClose={this.toggleNewTask}
+                           />
                     }
 
                 </div>

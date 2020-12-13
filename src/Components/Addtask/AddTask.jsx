@@ -9,7 +9,7 @@ class AddTask extends PureComponent {
     state = {
         title: '',
         description: '',
-        startDate: new Date()
+        date: new Date()
     }
 
     handleChange = (event) => {
@@ -24,17 +24,28 @@ class AddTask extends PureComponent {
             this.handleClick();
         }
     }
+    handleDate = (date) =>{
+       
+        this.setState({
+            date
+        })
+    };
+
     handleClick = () => {
-        let { title, description } = this.state;
+        let { title, description, date } = this.state;
         if (! title ) {
             return;
         }
         let task = {
             title: title,
             description: description,
+            date : date.toISOString().slice(0, 10)
         };
         this.props.onAdd(task);
-    }
+    };
+
+   
+   
 
     render() {
         
@@ -71,7 +82,9 @@ class AddTask extends PureComponent {
                         </div>
                         <div>
                          <DatePicker
-                          selected={this.state.startDate}
+                          selected={this.state.date}
+                          onChange={this.handleDate}
+                          minDate={new Date()}
                         />
                         </div>
                     </Modal.Body>
@@ -99,7 +112,8 @@ class AddTask extends PureComponent {
 };
 
 AddTask.propTypes = {
-    onAdd: PropTypes.func.isRequired
+    onAdd: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired
 }
 
 export default AddTask;

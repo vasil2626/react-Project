@@ -1,5 +1,6 @@
 .card{
     margin: 15px auto;
+    border-color: orange;
 }
 
 .edit{
@@ -8,9 +9,16 @@
 }
 .delete{
     margin: 5px;
+    color: black;
  
 }
 
-.selected{
-    border: 1px solid red;
+
+.card:hover{
+    
+    border-color: purple;
+    
+}
+.data{
+    font-size: 12px;
 }
