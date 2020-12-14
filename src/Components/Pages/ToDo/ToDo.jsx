@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
 import { Button, Container, Row, Col } from 'react-bootstrap';
 import styles from './toDo.module.css';
-import Task from '../Task/Task';
-import AddTask from '../Addtask/AddTask';
-import Confirm from '../Confirm/Confirm';
-import EditTaskModal from '../EditTaskModal/EditTaskModal';
+import Task from '../../Task/Task';
+import AddTask from '../../Addtask/AddTask';
+import Confirm from '../../Confirm/Confirm';
+import EditTaskModal from '../../EditTaskModal/EditTaskModal';
 
 
 
@@ -16,7 +16,6 @@ class ToDo extends PureComponent {
         editTask: null,
         newTaskModal: false
     };
-
 
     componentDidMount() {
         fetch("http://localhost:3001/task", {
@@ -50,6 +49,7 @@ class ToDo extends PureComponent {
             this.handleClick();
         }
     }
+
     handleClick = (data) => {
         let body = JSON.stringify(data)
         fetch("http://localhost:3001/task", {
@@ -74,6 +74,7 @@ class ToDo extends PureComponent {
 
 
     }
+
     removeTask = (taskid) => {
         fetch(`http://localhost:3001/task/${taskid}`, {
             method: 'DELETE',
@@ -108,6 +109,7 @@ class ToDo extends PureComponent {
         })
 
     };
+
     removeSelectid = (taskid) => {
         let body = {
             tasks: [...this.state.selected]
@@ -139,17 +141,20 @@ class ToDo extends PureComponent {
             .catch((error) => console.log("Error", error))
 
     };
+
     toggleConfirm = () => {
         this.setState({
             showConfirm: !this.state.showConfirm
 
         });
     };
+
     toggleEdit = (task) => {
         this.setState({
             editTask: task
         })
-    }
+    };
+
     saveTask = (editTask) => {
         fetch(`http://localhost:3001/task/${editTask._id}`, {
             method: 'PUT',
@@ -181,7 +186,7 @@ class ToDo extends PureComponent {
             newTaskModal: ! this.state.newTaskModal
         })
 
-    }
+    };
 
     render() {
         

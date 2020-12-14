@@ -1,6 +1,5 @@
 import React,{ PureComponent } from 'react';
 import { Button, Modal, InputGroup, FormControl } from 'react-bootstrap';
-// import PropTypes from 'prop-types';
 import styles from './EditTaskModal.module.css'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -112,11 +111,5 @@ render() {
 
 };
 };
-
-// EditTaskModal.propTypes = {
-//   data: PropTypes.object.isRequired,
-//   onSave: PropTypes.func.isRequired,
-//   onClose: PropTypes.func.isRequired
-// }
 
 export default EditTaskModal;
