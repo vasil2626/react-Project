@@ -1,0 +1,17 @@
+.cardTask{
+    padding: 10px;
+    text-align: center;
+}
+.spinerpos{
+    text-align: center;
+    padding: 300px;
+}
+
+.edit{
+    padding: 5px;
+    text-align: center;
+}
+.delete{
+    padding: 5px;
+    text-align: center;
+}

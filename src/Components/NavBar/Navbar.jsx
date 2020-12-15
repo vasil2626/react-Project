@@ -12,7 +12,7 @@ function NavMenue(props) {
             <Navbar.Brand>
                 <Link to="/"
                  className={Styles.navbar}
-                > Logo 
+                > HOME 
                 </Link>
                 </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />

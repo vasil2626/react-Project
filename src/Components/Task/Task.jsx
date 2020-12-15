@@ -30,7 +30,7 @@ class Task extends PureComponent {
                         type='checkbox'
                         onClick={this.hendleCheck} />
                     <Card.Title>
-                        <Link to={`/task/ ${task._id}`}> 
+                        <Link to={`/task/${task._id}`}> 
                          {task.title} 
                         </Link>
                         </Card.Title>
