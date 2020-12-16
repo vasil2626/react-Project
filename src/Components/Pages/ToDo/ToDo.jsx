@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Button, Container, Row, Col } from 'react-bootstrap';
+import { Button, Container, Row, Col, Spinner } from 'react-bootstrap';
 import styles from './toDo.module.css';
 import Task from '../../Task/Task';
 import AddTask from '../../Addtask/AddTask';
@@ -65,7 +65,7 @@ class ToDo extends PureComponent {
                 let tasks = [respons, ...this.state.task]
                 this.setState({
                     task: tasks,
-                    newTaskModal: !this.state.newTaskModal     
+                    newTaskModal: !this.state.newTaskModal
                 });
             })
             .catch((error) => {
@@ -181,26 +181,34 @@ class ToDo extends PureComponent {
 
     };
 
-    toggleNewTask = () =>{
+    toggleNewTask = () => {
         this.setState({
-            newTaskModal: ! this.state.newTaskModal
+            newTaskModal: !this.state.newTaskModal
         })
 
     };
 
     render() {
-        
+
         let { selected, showConfirm, editTask, newTaskModal } = this.state;
 
         let card = this.state.task.map((task) => {
             return (
                 <Col key={task._id} xs={12} sm={6} md={4} lg={3} xl={2}>
-                    <Task
-                        data={task}
-                        onRemove={this.removeTask}
-                        onCheck={this.handleCheck}
-                        onEdit={this.toggleEdit}
-                    />
+                    { !! this.state.task  ?
+                 
+                     <Task
+                      data={task}
+                      onRemove={this.removeTask}
+                      onCheck={this.handleCheck}
+                      onEdit={this.toggleEdit}
+                  />:
+                  <div>
+                      <Spinner animation="border" variant="warning" />
+                  </div>
+                 
+                    }
+                     
                 </Col>
             )
         })
@@ -212,16 +220,16 @@ class ToDo extends PureComponent {
                         <Row className={'justify-content-center text-center'}>
                             <Col sm={8} xs={6} md={12} es={4}>
                                 <Button
-                                variant='outline-success'
-                                onClick={this.toggleNewTask}
-                                disabled={selected.size}
+                                    variant='outline-success'
+                                    onClick={this.toggleNewTask}
+                                    disabled={selected.size}
                                 >
                                     Add Task
                                     </Button>
                             </Col>
                         </Row>
-                        <Row 
-                        className={`justify-content-center text-center ${styles.buttonRemove}`}
+                        <Row
+                            className={`justify-content-center text-center ${styles.buttonRemove}`}
                         >
                             <Col xs={4}>
                                 <Button
@@ -229,15 +237,14 @@ class ToDo extends PureComponent {
                                     variant='outline-danger'
                                     onClick={this.toggleConfirm}
                                     disabled={!selected.size}
-                                    >
+                                >
                                     Remove Task
                             </Button>
                             </Col>
                         </Row>
-                        <Row >
-                            {card}
+                        <Row>
+                            { card }
                         </Row>
-                        
                     </Container>
                     {showConfirm &&
                         < Confirm
@@ -245,18 +252,18 @@ class ToDo extends PureComponent {
                             onClose={this.toggleConfirm}
                             count={selected.size}
                         />}
-                    { !! editTask &&
+                    {!!editTask &&
                         <EditTaskModal
                             data={editTask}
                             onSave={this.saveTask}
                             onClose={() => { this.toggleEdit(null) }}
                         />
                     }
-                    {  newTaskModal && 
-                          <AddTask
-                          onAdd={this.handleClick}
-                          onClose={this.toggleNewTask}
-                           />
+                    {newTaskModal &&
+                        <AddTask
+                            onAdd={this.handleClick}
+                            onClose={this.toggleNewTask}
+                        />
                     }
 
                 </div>

@@ -1,6 +1,6 @@
 .card{
     margin: 15px auto;
-    border-color: orange;
+    border-color: rgba(9, 255, 0, 0.733);
 }
 
 .edit{
@@ -16,7 +16,7 @@
 
 .card:hover{
     
-    border-color: purple;
+    border-color: rgb(11, 132, 231);
     
 }
 .data{
