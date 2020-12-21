@@ -1,20 +1,28 @@
 import React from 'react';
 import './App.css';
-import Residence from './location/loc';
-import Names from './names/names';
-import Prof from './profesion/profesion';
-
-
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import ToDo from './Components/Pages/ToDo/ToDo';
+import AboutUs from './Components/Pages/AboutUs/AboutUs';
+import SingleTask from './Components/Pages/SingleTask/SingleTask';
+import PageNot from './Components/Pages/NotfoundPage/PageNot';
+import NavMenue from './Components/NavBar/Navbar';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 function App() {
   return (
     <div className="App">
-     <Names name="john" surname="smith" age="80"/>
-     <Prof prof="web developer"/>
-     <Residence res="u.s.a"/>
-      
-      
+
+      <NavMenue />
+
+      <Switch>
+        <Route path='/' exact component={ToDo} />
+        <Route path="/task" exact component={ToDo} />
+        <Route path='/about' exact component={AboutUs} />
+        <Route path="/task/:id" exact component={SingleTask} />
+        <Route to='/404' exact component={PageNot} />
+        <Redirect to='/404' />
+      </Switch>
+
     </div>
   );
 }

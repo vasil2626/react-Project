@@ -1,0 +1,10 @@
+.navbar{
+    color: orange;
+    padding: 10px;
+
+}
+
+.active {
+    color: rgb(130, 235, 81);
+   
+}

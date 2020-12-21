@@ -1,0 +1,1 @@
+export let formatDate = (str = '') => str.slice(0 ,10);
