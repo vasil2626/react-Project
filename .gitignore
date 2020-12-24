@@ -20,6 +20,6 @@ temp/*
 *.bak
 */.bak
 /node_modules
-
+*.log
 node_modules
 

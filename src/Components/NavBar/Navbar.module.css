@@ -1,10 +1,16 @@
-.navbar{
-    color: orange;
-    padding: 10px;
 
+.navbar{
+    color: #ffc107;
+    padding: 10px;
+}
+
+.navbar:hover{
+    text-decoration: none;
+    color:  #fff;
+    
 }
 
 .active {
-    color: rgb(130, 235, 81);
+    color:#dc3545;
    
 }

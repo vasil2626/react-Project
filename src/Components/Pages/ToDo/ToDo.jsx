@@ -7,7 +7,6 @@ import Confirm from '../../Confirm/Confirm';
 import EditTaskModal from '../../EditTaskModal/EditTaskModal';
 
 
-
 class ToDo extends PureComponent {
     state = {
         task: [],
