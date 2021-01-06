@@ -1,17 +1,30 @@
 import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 import ToDo from './Components/Pages/ToDo/ToDo';
 import AboutUs from './Components/Pages/AboutUs/AboutUs';
 import SingleTask from './Components/Pages/SingleTask/SingleTask';
 import PageNot from './Components/Pages/NotfoundPage/PageNot';
 import NavMenue from './Components/NavBar/Navbar';
+import { Spinner } from 'react-bootstrap';
+import { ToastContainer, toast, Flip } from 'react-toastify';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-function App() {
+function App(props) {
+
+  let{errorMessage, successMessage, loading} = props;
+
+  if (errorMessage) {
+    toast.error(errorMessage);
+  }
+  if(successMessage){
+    toast.success(successMessage)
+  }
+
   return (
     <div className="App">
-
       <NavMenue />
 
       <Switch>
@@ -23,8 +36,36 @@ function App() {
         <Redirect to='/404' />
       </Switch>
 
+      <ToastContainer
+        position="bottom-left"
+        transition={Flip}
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      { loading && 
+             <div className='spinerpos'>
+             <Spinner animation="border" variant="warning" />
+         </div>
+      }
+
     </div>
   );
+
 }
 
-export default App;
+let mapStateToProps = (state) => {
+  return {
+    error: state.errorMessage,
+    successMessage: state.successMessage,
+    loading: state.loading
+  }
+}
+
+
+export default connect(mapStateToProps)(App);

@@ -4,6 +4,8 @@ import styles from './Addtasks.module.css';
 import PropTypes from 'prop-types';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { connect } from 'react-redux'
+import { addTask } from '../../store/actions';
 
 function AddTask(props) {
 
@@ -11,29 +13,29 @@ function AddTask(props) {
         title: '',
         description: '',
         date: new Date()
-        
+
     });
 
     let handleChange = (event) => {
-        let {name, value } = event.target; 
+        let { name, value } = event.target;
         setForms({
             ...forms,
             [name]: value
-        }) 
-        
+        })
+
     }
 
-    let handleDate = (date) =>{
+    let handleDate = (date) => {
         setForms({
             ...forms,
             date
         })
     };
-    
+
     let handleClick = () => {
 
-        let {title, description, date } = forms;
-        if(!title){
+        let { title, description, date } = forms;
+        if (!title) {
             return
         }
 
@@ -42,15 +44,15 @@ function AddTask(props) {
             description,
             date: date.toISOString().slice(0, 10)
         }
-        props.onAdd(task);
+        props.addTask(task)
     };
-    
+
     let handleKeyDown = (event) => {
-        if(event.key ==='Enter'){
+        if (event.key === 'Enter') {
             handleClick();
         }
     }
-    
+
     return (
         <>
             <Modal
@@ -73,21 +75,21 @@ function AddTask(props) {
                         </InputGroup>
                     </div>
                     <div>
-                        <textarea 
-                        className={styles.area}
-                        name="description"
-                        onChange={handleChange} 
-                        rows='5'
-                        placeholder="Task Description"
+                        <textarea
+                            className={styles.area}
+                            name="description"
+                            onChange={handleChange}
+                            rows='5'
+                            placeholder="Task Description"
                         >
                         </textarea>
                     </div>
                     <div>
-                     <DatePicker
-                      selected={forms.date}
-                      onChange={handleDate}
-                      minDate={new Date()}
-                    />
+                        <DatePicker
+                            selected={forms.date}
+                            onChange={handleDate}
+                            minDate={new Date()}
+                        />
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
@@ -99,7 +101,7 @@ function AddTask(props) {
                     </Button>
                     <Button
                         variant="danger"
-                        onClick={() =>props.onClose()}
+                        onClick={() => props.onClose()}
                     >
                         Close
                     </Button>
@@ -108,13 +110,16 @@ function AddTask(props) {
 
         </>
 
-    ); 
-      
-    };
+    );
+
+};
 
 AddTask.propTypes = {
-    onAdd: PropTypes.func.isRequired,
+
     onClose: PropTypes.func.isRequired
 }
+let mapDispatchToProps = {
+    addTask
+}
 
-export default AddTask;
+export default connect(null, mapDispatchToProps)(AddTask);

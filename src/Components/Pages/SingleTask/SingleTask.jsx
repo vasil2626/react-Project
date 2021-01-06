@@ -4,11 +4,11 @@ import { formatDate } from '../../../Support/utilit';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import EditTaskModal from '../../EditTaskModal/EditTaskModal';
-import { Spinner, Card, Button } from 'react-bootstrap';
+import { Card, Button } from 'react-bootstrap';
 
 class SingleTask extends PureComponent {
     state = {
-        task: null,
+        task: '',
         showEdit: false
     };
 
@@ -90,32 +90,29 @@ class SingleTask extends PureComponent {
         let { task, showEdit } = this.state;
         return (
             <>
-                {!!task ?
-                    <div className={Styles.cardTask}>
-                        <Card>
-                            <Card.Body>
-                                <h2> Title:
-                                     {task.title}
-                                </h2>
-                                <h3> Deskription:
-                                    {task.description}
-                                </h3>
-                                <h4>
-                                    Date:
-                                     {formatDate(task.date)}
-                                </h4>
-                                <h5>
-                                    Created At:
-                                    {formatDate(task.created_at)}
-                                </h5>
-                            </Card.Body>
-                        </Card>
 
-                    </div> :
-                    <div className={Styles.spinerpos}>
-                        <Spinner animation="border" variant="warning" />
-                    </div>
-                }
+                <div className={Styles.cardTask}>
+                    <Card>
+                        <Card.Body>
+                            <h2> Title:
+                                 {task.title}
+                            </h2>
+                            <h3> Deskription:
+                                {task.description}
+                            </h3>
+                            <h4>
+                                Date:
+                                 {formatDate(task.date)}
+                            </h4>
+                            <h5>
+                                Created At:
+                                {formatDate(task.created_at)}
+                            </h5>
+                        </Card.Body>
+                    </Card>
+
+                </div>
+
                 <div
                     className={Styles.edit}>
                     <Button
@@ -124,8 +121,8 @@ class SingleTask extends PureComponent {
                     >
                         <FontAwesomeIcon
                             icon={faEdit} />
-                      Edit
-                     </Button>
+                  Edit
+                 </Button>
                 </div>
                 <div className={Styles.delete}>
                     <Button
@@ -134,8 +131,8 @@ class SingleTask extends PureComponent {
                     >
                         <FontAwesomeIcon
                             icon={faTrash} />
-                       Delete
-                      </Button>
+                   Delete
+                  </Button>
                 </div>
 
                 {
@@ -149,7 +146,8 @@ class SingleTask extends PureComponent {
                 }
 
             </>
-        );
+
+        )
     };
 
 };

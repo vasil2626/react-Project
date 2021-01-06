@@ -1,15 +1,16 @@
 import React, { PureComponent } from 'react';
-import { Button, Container, Row, Col, Spinner } from 'react-bootstrap';
+import { Button, Container, Row, Col } from 'react-bootstrap';
 import styles from './toDo.module.css';
 import Task from '../../Task/Task';
 import AddTask from '../../Addtask/AddTask';
 import Confirm from '../../Confirm/Confirm';
 import EditTaskModal from '../../EditTaskModal/EditTaskModal';
+import { connect } from 'react-redux';
+import { getTasks } from '../../../store/actions'
 
 
 class ToDo extends PureComponent {
     state = {
-        task: [],
         selected: new Set(),
         showConfirm: false,
         editTask: null,
@@ -17,24 +18,14 @@ class ToDo extends PureComponent {
     };
 
     componentDidMount() {
-        fetch("http://localhost:3001/task", {
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json"
-            },
-        })
-            .then((respons) => respons.json())
-            .then((res) => {
-                if (res.error) {
-                    throw res.erroe
-                }
-                this.setState({
-                    task: res
-                })
-            })
-            .catch((error) => {
-                new Error('Bad Request', error)
-            })
+        this.props.getTasks();
+
+    }
+
+    componentDidUpdate(prevProps) {
+        if (!prevProps.addTaskSuccess && this.props.addTaskSuccess) {
+            this.toggleNewTask()
+        }
     }
 
     handleChange = (event) => {
@@ -47,52 +38,6 @@ class ToDo extends PureComponent {
         if (event.key === 'Enter') {
             this.handleClick();
         }
-    }
-
-    handleClick = (data) => {
-        let body = JSON.stringify(data)
-        fetch("http://localhost:3001/task", {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: body
-        })
-
-            .then((res) => res.json())
-            .then((respons) => {
-                let tasks = [respons, ...this.state.task]
-                this.setState({
-                    task: tasks,
-                    newTaskModal: !this.state.newTaskModal
-                });
-            })
-            .catch((error) => {
-                throw error = new Error('Request error')
-            });
-
-
-    }
-
-    removeTask = (taskid) => {
-        fetch(`http://localhost:3001/task/${taskid}`, {
-            method: 'DELETE',
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-            .then((res) => res.json())
-            .then((respons) => {
-                if (respons.error) {
-                    throw respons.error
-                }
-                let newTasks = this.state.task.filter((task) => task._id !== taskid)
-                this.setState({
-                    task: newTasks
-                });
-            })
-            .catch((error) => console.log("Error", error));
-
     }
 
     handleCheck = (taskid) => {
@@ -190,27 +135,15 @@ class ToDo extends PureComponent {
     render() {
 
         let { selected, showConfirm, editTask, newTaskModal } = this.state;
-
-        let card = this.state.task.map((task) => {
-            return (
-                <Col key={task._id} xs={12} sm={6} md={4} lg={3} xl={2}>
-                    { !! this.state.task  ?
-                 
-                     <Task
-                      data={task}
-                      onRemove={this.removeTask}
-                      onCheck={this.handleCheck}
-                      onEdit={this.toggleEdit}
-                  />:
-                  <div>
-                      <Spinner animation="border" variant="warning" />
-                  </div>
-                 
-                    }
-                     
-                </Col>
-            )
-        })
+        let { task } = this.props;
+        let card = task.map((task) => (
+            <Col key={task._id} xs={12} sm={6} md={4} lg={3} xl={2}>
+                <Task
+                    data={task}
+                    onCheck={this.handleCheck}
+                    onEdit={this.toggleEdit} />
+            </Col>
+        ))
 
         return (
             <>
@@ -242,7 +175,7 @@ class ToDo extends PureComponent {
                             </Col>
                         </Row>
                         <Row>
-                            { card }
+                            {card}
                         </Row>
                     </Container>
                     {showConfirm &&
@@ -260,7 +193,6 @@ class ToDo extends PureComponent {
                     }
                     {newTaskModal &&
                         <AddTask
-                            onAdd={this.handleClick}
                             onClose={this.toggleNewTask}
                         />
                     }
@@ -270,4 +202,16 @@ class ToDo extends PureComponent {
         );
     };
 };
-export default ToDo;
+
+let mapStateToProps = (state) => {
+    return {
+        task: state.task,
+        addTaskSuccess: state.addTaskSuccess
+    }
+}
+
+let mapDispatchToProps = {
+    getTasks: getTasks
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ToDo);

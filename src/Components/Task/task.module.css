@@ -19,7 +19,7 @@
 
 .card:hover{
     border-color: rgb(11, 132, 231);
-    transition: cubic-bezier();
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 .data{
     font-size: 12px;
