@@ -1,17 +1,21 @@
 import React, { PureComponent } from 'react';
 import { Button, Container, Row, Col } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import styles from './toDo.module.css';
 import Task from '../../Task/Task';
+import Search from '../../Search/Search';
 import AddTask from '../../Addtask/AddTask';
 import Confirm from '../../Confirm/Confirm';
 import EditTaskModal from '../../EditTaskModal/EditTaskModal';
 import { connect } from 'react-redux';
-import { getTasks } from '../../../store/actions'
+import { getTasks, removeSelectid } from '../../../store/actions'
 
 
 class ToDo extends PureComponent {
     state = {
         selected: new Set(),
+        searchBar: false,
         showConfirm: false,
         editTask: null,
         newTaskModal: false
@@ -25,6 +29,17 @@ class ToDo extends PureComponent {
     componentDidUpdate(prevProps) {
         if (!prevProps.addTaskSuccess && this.props.addTaskSuccess) {
             this.toggleNewTask()
+        }
+        if (!prevProps.removeTaskSuccess && this.props.removeTaskSuccess) {
+            this.setState({
+                showConfirm: false,
+                selected: new Set(),
+            })
+        }
+        if (!prevProps.editTaskSuccess && this.props.editTaskSuccess) {
+            this.setState({
+                editTask: null
+            })
         }
     }
 
@@ -54,35 +69,9 @@ class ToDo extends PureComponent {
 
     };
 
-    removeSelectid = (taskid) => {
-        let body = {
-            tasks: [...this.state.selected]
-        }
-        fetch(`http://localhost:3001/task`, {
-            method: 'PATCH',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(body)
-        })
-            .then((res) => res.json())
-            .then((respons) => {
-                if (respons.error) {
-                    throw respons.error
-                }
-                let task = [...this.state.task];
-                this.state.selected.forEach((id) => {
-                    task = task.filter((task) => task._id !== id);
-                    this.setState({
-                        task,
-                        selected: new Set(),
-                        showConfirm: false
-                    });
-
-                });
-
-            })
-            .catch((error) => console.log("Error", error))
+    removeSelectid = () => {
+        let selected = [...this.state.selected]
+        this.props.removeSelectid(selected)
 
     };
 
@@ -99,31 +88,6 @@ class ToDo extends PureComponent {
         })
     };
 
-    saveTask = (editTask) => {
-        fetch(`http://localhost:3001/task/${editTask._id}`, {
-            method: 'PUT',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(editTask)
-        })
-            .then((res) => res.json())
-            .then((respons) => {
-                if (respons.error) {
-                    throw respons.error
-                }
-                let task = [...this.state.task];
-                let foundTask = task.findIndex((task) => task._id === editTask._id);
-                task[foundTask] = editTask
-                this.setState({
-                    task: task
-
-                });
-                this.toggleEdit();
-            })
-            .catch((error) => console.log("Error", error))
-
-    };
 
     toggleNewTask = () => {
         this.setState({
@@ -132,14 +96,21 @@ class ToDo extends PureComponent {
 
     };
 
+    toggleDearch = () =>{
+        this.setState({
+            searchBar: ! this.state.searchBar
+        })
+    }
+
     render() {
 
-        let { selected, showConfirm, editTask, newTaskModal } = this.state;
+        let { selected, showConfirm, editTask, newTaskModal, searchBar } = this.state;
         let { task } = this.props;
         let card = task.map((task) => (
             <Col key={task._id} xs={12} sm={6} md={4} lg={3} xl={2}>
                 <Task
                     data={task}
+                    from ='tasks'
                     onCheck={this.handleCheck}
                     onEdit={this.toggleEdit} />
             </Col>
@@ -148,8 +119,22 @@ class ToDo extends PureComponent {
         return (
             <>
                 <div className={styles.toDo}>
+                    { 
+                    searchBar && 
+                     <Search />
+
+                     }
+               
+                <Button 
+                className={styles.serchButton}
+                variant="outline-primary"
+                onClick={this.toggleDearch}
+                >
+                 <FontAwesomeIcon icon={faSearch}/>
+                  Search
+                </Button>
                     < Container>
-                        <Row className={'justify-content-center text-center'}>
+                        <Row className={'justify-content-center text-center mt-3'}>
                             <Col sm={8} xs={6} md={12} es={4}>
                                 <Button
                                     variant='outline-success'
@@ -187,11 +172,11 @@ class ToDo extends PureComponent {
                     {!!editTask &&
                         <EditTaskModal
                             data={editTask}
-                            onSave={this.saveTask}
+                            from = 'tasks'
                             onClose={() => { this.toggleEdit(null) }}
                         />
                     }
-                    {newTaskModal &&
+                    { newTaskModal &&
                         <AddTask
                             onClose={this.toggleNewTask}
                         />
@@ -206,12 +191,17 @@ class ToDo extends PureComponent {
 let mapStateToProps = (state) => {
     return {
         task: state.task,
-        addTaskSuccess: state.addTaskSuccess
+        addTaskSuccess: state.addTaskSuccess,
+        editTaskSuccess: state.edidTaskSuccess,
+        removeTaskSuccess: state.removeTaskSuccess,
     }
 }
 
 let mapDispatchToProps = {
-    getTasks: getTasks
+    getTasks,
+    removeSelectid,
+
+    
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ToDo);

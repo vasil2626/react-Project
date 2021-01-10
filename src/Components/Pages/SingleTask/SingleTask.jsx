@@ -2,127 +2,113 @@ import React, { PureComponent } from 'react';
 import Styles from '../SingleTask/Singletask.module.css';
 import { formatDate } from '../../../Support/utilit';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faEdit, faHistory, faCheck } from '@fortawesome/free-solid-svg-icons';
 import EditTaskModal from '../../EditTaskModal/EditTaskModal';
 import { Card, Button } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { getSingleTask, remuveTask, changeTaskStatus } from '../../../store/actions';
 
 class SingleTask extends PureComponent {
     state = {
-        task: '',
         showEdit: false
     };
 
-
-
     onRemuve = () => {
-        let taskId = this.state.task._id
-        fetch(`http://localhost:3001/task/${taskId}`, {
-            method: 'DELETE',
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-            .then((res) => res.json())
-            .then((respons) => {
-                if (respons.error) {
-                    throw respons.error
-                }
-                this.props.history.push('/')
-
-            })
-            .catch((error) => console.log("Error", error));
-
+        let taskId = this.props.match.params.id
+        const from = 'single';
+        this.props.remuveTask(taskId, { from: from })
+        this.props.history.push('/')
     }
 
 
     componentDidMount() {
         let taskId = this.props.match.params.id;
-        fetch(`http://localhost:3001/task/${taskId}`, {
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-            .then((respons) => respons.json())
-            .then((res) => {
-                if (res.error) {
-                    throw res.erroe
-                }
-                this.setState({
-                    task: res
-                })
-            })
-            .catch((error) => {
-                new Error('Bad Request', error)
-            })
+        this.props.getSingleTask(taskId);
+
+
     }
+
+    componentDidUpdate(prevProps) {
+        if (!prevProps.edidTaskSuccess && this.props.edidTaskSuccess) {
+            this.setState({
+                showEdit: false
+            })
+        }
+
+    }
+
     toggleTask = () => {
         this.setState({
             showEdit: !this.state.showEdit
         })
     }
 
-    saveTask = (editTask) => {
-        fetch(`http://localhost:3001/task/${editTask._id}`, {
-            method: 'PUT',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(editTask)
-        })
-            .then((res) => res.json())
-            .then((respons) => {
-                if (respons.error) {
-                    throw respons.error
-                }
-
-                this.setState({
-                    task: respons,
-                    showEdit: false
-                })
-
-            })
-            .catch((error) => console.log("Error", error))
-
-    }
 
     render() {
-        let { task, showEdit } = this.state;
+        
+        let { showEdit } = this.state;
+        let { task } = this.props;
+        console.log(task)
+        
+    
         return (
             <>
+                {!!task ?
+                    <div className={Styles.cardTask}>
+                        <Card>
+                            <Card.Body>
+                                <h1> Title <br />
+                                    {task.title}
+                                </h1>
+                                <h2> <u>Deskription</u> <br />
+                                    {task.description}
+                                </h2>
+                                <h4>
+                                    Date <br />
+                                    {formatDate(task.date)}
+                                </h4>
+                                <h5>
+                                    Created At <br />
+                                    {formatDate(task.created_at)}
+                                </h5>
+                            </Card.Body>
+                        </Card>
 
-                <div className={Styles.cardTask}>
-                    <Card>
-                        <Card.Body>
-                            <h2> Title:
-                                 {task.title}
-                            </h2>
-                            <h3> Deskription:
-                                {task.description}
-                            </h3>
-                            <h4>
-                                Date:
-                                 {formatDate(task.date)}
-                            </h4>
-                            <h5>
-                                Created At:
-                                {formatDate(task.created_at)}
-                            </h5>
-                        </Card.Body>
-                    </Card>
-
+                    </div> :
+                    <div className={Styles.notFound}>
+                        <h3>Task Not Found</h3>
+                    </div>
+                }
+                <div className={Styles.statusButton}>
+                {
+                      task && task.status === 'active' ?
+                            <Button
+                                variant="success"
+                                onClick={() => this.props.changeTaskStatus(task._id, { status: 'done' }, 'single')}
+                            >
+                                <FontAwesomeIcon icon={faCheck} />
+                                Active
+                            </Button> :
+                            <Button
+                                variant="warning"
+                                onClick={() => this.props.changeTaskStatus(task._id, { status: 'active' }, 'single')}
+                        
+                            >
+                                <FontAwesomeIcon icon={faHistory} />
+                                Done
+                            </Button>
+                    }
                 </div>
-
-                <div
-                    className={Styles.edit}>
+           
+                <div className={Styles.cardTask}>
                     <Button
                         variant="warning"
                         onClick={this.toggleTask}
                     >
                         <FontAwesomeIcon
                             icon={faEdit} />
-                  Edit
-                 </Button>
+                      Edit
+                     </Button>
                 </div>
                 <div className={Styles.delete}>
                     <Button
@@ -131,14 +117,16 @@ class SingleTask extends PureComponent {
                     >
                         <FontAwesomeIcon
                             icon={faTrash} />
-                   Delete
-                  </Button>
+                       Delete
+                      </Button>
                 </div>
+               
 
                 {
                     showEdit &&
                     <EditTaskModal
                         data={task}
+                        from='single'
                         onSave={this.saveTask}
                         onClose={this.toggleTask}
                     />
@@ -152,4 +140,20 @@ class SingleTask extends PureComponent {
 
 };
 
-export default SingleTask;
+
+let mapStateToProps = (state) => {
+    return {
+        task: state.singleTask,
+        removeTaskSuccess: state.removeTaskSuccess,
+        edidTaskSuccess: state.edidTaskSuccess,
+    };
+
+}
+
+let mapDispatchToProps = {
+    getSingleTask,
+    remuveTask,
+    changeTaskStatus
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SingleTask);

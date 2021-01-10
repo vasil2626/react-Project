@@ -14,12 +14,12 @@ import { connect } from 'react-redux';
 
 function App(props) {
 
-  let{errorMessage, successMessage, loading} = props;
+  let { errorMessage, successMessage, loading } = props;
 
   if (errorMessage) {
     toast.error(errorMessage);
   }
-  if(successMessage){
+  if (successMessage) {
     toast.success(successMessage)
   }
 
@@ -48,10 +48,10 @@ function App(props) {
         draggable
         pauseOnHover
       />
-      { loading && 
-             <div className='spinerpos'>
-             <Spinner animation="border" variant="warning" />
-         </div>
+      { loading &&
+        <div className='spinerpos'>
+          <Spinner animation="border" variant="warning" />
+        </div>
       }
 
     </div>
@@ -61,7 +61,7 @@ function App(props) {
 
 let mapStateToProps = (state) => {
   return {
-    error: state.errorMessage,
+    errorMessage: state.errorMessage,
     successMessage: state.successMessage,
     loading: state.loading
   }

@@ -1,3 +1,8 @@
+.statusButton{
+    padding: 10px;
+    text-align: center;
+}
+
 .cardTask{
     padding: 10px;
     text-align: center;
@@ -9,5 +14,10 @@
 }
 .delete{
     padding: 5px;
+    text-align: center;
+}
+
+.notFound{
+    padding: 20px;
     text-align: center;
 }

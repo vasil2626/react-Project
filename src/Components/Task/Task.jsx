@@ -2,31 +2,33 @@ import React, { useState, memo } from 'react';
 import styles from '../Task/task.module.css';
 import { Button, Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faEdit, faCheck, faHistory } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 import { formatDate } from '../../Support/utilit';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { remuveTask } from '../../store/actions';
+import { remuveTask, changeTaskStatus } from '../../store/actions';
 
 function Task(props){
 
-    let [checked, setChecked] = useState({ checked: false });
+    let [selected, setselected] = useState({ selected: false });
 
     let hendleCheck = () => {
-        setChecked = ({
-            ...checked,
-            checked: !checked
+        setselected = ({
+            ...selected,
+            selected: !selected
         });
-        let { onCheck, data } = props;
-        onCheck(data._id);
+        let { onCheck, data, from } = props;
+        onCheck(data._id, from);
     }
+
+ 
 
     let task = props.data
 
     return (
         <Card
-            className={`${styles.card} ${checked ? styles.selected : null}`} >
+            className={`${styles.card} ${selected ? styles.selected : null}`} >
             <Card.Body>
                 <input
                     type='checkbox'
@@ -49,8 +51,27 @@ function Task(props){
                     Created_at:
                         {formatDate(task.created_at)}
                 </Card.Text>
-                <Button
+                {
+                    task.status === 'active'?
+                    <Button
+                    variant="success"
+                    className={styles.edit}
+                    onClick={() => props.changeTaskStatus(task._id,{status: 'done'}, 'tasks')}
+                >
+                    <FontAwesomeIcon icon={faCheck} />
+                </Button>:
+                  <Button
                     variant="warning"
+                    className={styles.edit}
+                    onClick={() => props.changeTaskStatus(task._id,{status: 'active'}, 'tasks')}
+                >
+                    <FontAwesomeIcon icon={faHistory} />
+                </Button>
+                }
+             
+              
+                <Button
+                    variant="info"
                     className={styles.edit}
                     onClick={() => props.onEdit(task)}
                 >
@@ -59,7 +80,9 @@ function Task(props){
                 <Button
                     variant="danger"
                     className={styles.delete}
-                    onClick={() => props.remuveTask(task._id)}>
+                    onClick={() => props.remuveTask(task._id,props.from)}
+                    
+                    >
                     <FontAwesomeIcon icon={faTrash} />
                 </Button>
             </Card.Body>
@@ -73,8 +96,17 @@ Task.propTypes = {
     onCheck: PropTypes.func.isRequired,
 
 }
-let mapDispatchToProps = {
-    remuveTask
+
+let mapStateToProps = (state) =>{
+    return{
+        removeTaskSuccess: state.removeTaskSuccess
+    }
 }
 
-export default connect(null, mapDispatchToProps)(memo(Task));
+
+let mapDispatchToProps = {
+    remuveTask,
+    changeTaskStatus
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(memo(Task));

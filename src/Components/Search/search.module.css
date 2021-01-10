@@ -1,0 +1,11 @@
+.searchBar{
+    display: flex;
+    width: 100% auto;
+    height: 170px;
+    background-color: darkgray;
+
+}
+
+.dates{
+    padding: 5px;
+}
