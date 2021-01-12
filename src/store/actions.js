@@ -1,8 +1,10 @@
 import requst from '../Support/request';
 import * as actionTypes from './actionTypes';
 
+let apiUrl = process.env.REACT_APP_API_URL;
+
 function getTasks(data={}) {
-    let url = 'http://localhost:3001/task'
+    let url = `${apiUrl}/task` 
     let query = '?'
     for(let key in data){
         let value = data[key]
@@ -31,7 +33,7 @@ function addTask(data) {
 
     return (dispatch) => {
         dispatch({ type: actionTypes.LOADING });
-        requst('http://localhost:3001/task', 'POST', data)
+        requst(`${apiUrl}/task`, 'POST', data)
             .then(res => {
                 dispatch({ type: actionTypes.ADD_TASK_SUCCESS, tasks: res })
             })
@@ -51,7 +53,7 @@ function remuveTask(taskId, from) {
 
     return (dispatch) => {
         dispatch({ type: actionTypes.LOADING });
-        requst(`http://localhost:3001/task/${taskId}`, 'DELETE')
+        requst(`${apiUrl}/task/${taskId}`, 'DELETE')
             .then(res => {
                 dispatch({ type: actionTypes.REMOVE_TASK_SUCCESS, taskId , from })
             })
@@ -71,7 +73,7 @@ function removeSelectid(taskId) {
 
     return (dispatch) => {
         dispatch({ type: actionTypes.LOADING });
-        requst(`http://localhost:3001/task`, 'PATCH', { tasks: taskId })
+        requst(`${apiUrl}/task`, 'PATCH', { tasks: taskId })
             .then(res => {
                 dispatch({ type: actionTypes.REMOVE_SELECTED_TASK_SUCCESS, taskId })
             })
@@ -91,7 +93,7 @@ function editTask(data, from) {
 
     return (dispatch) => {
         dispatch({ type: actionTypes.LOADING });
-        requst(`http://localhost:3001/task/${data._id}`, 'PUT', data )
+        requst(`${apiUrl}/task/${data._id}`, 'PUT', data )
             .then(editTask => {
                 dispatch({ type: actionTypes.EDIT_TASK_SUCCESS, task: editTask, from })
             })
@@ -110,7 +112,7 @@ function changeTaskStatus(id ,data, from) {
 
     return (dispatch) => {
         dispatch({ type: actionTypes.LOADING });
-        requst(`http://localhost:3001/task/${id}`, 'PUT', data )
+        requst(`${apiUrl}/task/${id}`, 'PUT', data )
             .then(editTask => {
                 dispatch({ type: actionTypes.CHANGE_TASK_STATUS_SUCCESS, task: editTask, from })
             })
@@ -130,7 +132,7 @@ function getSingleTask(taskId) {
 
     return (dispatch) => {
         dispatch({ type: actionTypes.LOADING });
-        requst(`http://localhost:3001/task/${taskId}`)
+        requst(`${apiUrl}/task/${taskId}`)
             .then(res => {
                 dispatch({ type: actionTypes.GET_SINGLE_TASK_SUCCESS, singleTask: res})
             })

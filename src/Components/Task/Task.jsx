@@ -11,10 +11,10 @@ import { remuveTask, changeTaskStatus } from '../../store/actions';
 
 function Task(props){
 
-    let [selected, setselected] = useState({ selected: false });
+    let [selected, setSelected] = useState({ selected: false });
 
     let hendleCheck = () => {
-        setselected = ({
+        setSelected ({
             ...selected,
             selected: !selected
         });
@@ -25,14 +25,16 @@ function Task(props){
  
 
     let task = props.data
-
+    let{disabled} = props
     return (
         <Card
             className={`${styles.card} ${selected ? styles.selected : null}`} >
             <Card.Body>
                 <input
                     type='checkbox'
-                    onClick={hendleCheck} />
+                    onClick={hendleCheck}
+                    disabled={!selected}
+                     />
                 <Card.Title>
                     <Link to={`/task/${task._id}`}>
                         {task.title.slice(0, 7)}
@@ -51,12 +53,17 @@ function Task(props){
                     Created_at:
                         {formatDate(task.created_at)}
                 </Card.Text>
+                <Card.Text className={styles.data}>
+                    Status :
+                        {task.status} 
+                </Card.Text>
                 {
                     task.status === 'active'?
                     <Button
                     variant="success"
                     className={styles.edit}
                     onClick={() => props.changeTaskStatus(task._id,{status: 'done'}, 'tasks')}
+                    disabled={disabled}
                 >
                     <FontAwesomeIcon icon={faCheck} />
                 </Button>:
@@ -64,6 +71,7 @@ function Task(props){
                     variant="warning"
                     className={styles.edit}
                     onClick={() => props.changeTaskStatus(task._id,{status: 'active'}, 'tasks')}
+                    disabled={disabled}
                 >
                     <FontAwesomeIcon icon={faHistory} />
                 </Button>
@@ -73,13 +81,16 @@ function Task(props){
                 <Button
                     variant="info"
                     className={styles.edit}
+                    disabled={disabled}
                     onClick={() => props.onEdit(task)}
+                    
                 >
                     <FontAwesomeIcon icon={faEdit} />
                 </Button>
                 <Button
                     variant="danger"
                     className={styles.delete}
+                    disabled={disabled}
                     onClick={() => props.remuveTask(task._id,props.from)}
                     
                     >

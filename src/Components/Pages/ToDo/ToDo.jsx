@@ -96,7 +96,7 @@ class ToDo extends PureComponent {
 
     };
 
-    toggleDearch = () =>{
+    toggleSearch = () =>{
         this.setState({
             searchBar: ! this.state.searchBar
         })
@@ -107,12 +107,14 @@ class ToDo extends PureComponent {
         let { selected, showConfirm, editTask, newTaskModal, searchBar } = this.state;
         let { task } = this.props;
         let card = task.map((task) => (
-            <Col key={task._id} xs={12} sm={6} md={4} lg={3} xl={2}>
+            <Col key={task._id} xs={12} sm={6} md={4} lg={4} xl={3}>
                 <Task
                     data={task}
                     from ='tasks'
+                    disabled={!!selected.size}
                     onCheck={this.handleCheck}
                     onEdit={this.toggleEdit} />
+                    
             </Col>
         ))
 
@@ -128,7 +130,8 @@ class ToDo extends PureComponent {
                 <Button 
                 className={styles.serchButton}
                 variant="outline-primary"
-                onClick={this.toggleDearch}
+                onClick={this.toggleSearch}
+                disabled={selected.size}
                 >
                  <FontAwesomeIcon icon={faSearch}/>
                   Search

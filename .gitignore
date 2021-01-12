@@ -21,4 +21,5 @@ temp/*
 /node_modules
 *.log
 */logs/debug.log
+.env
 

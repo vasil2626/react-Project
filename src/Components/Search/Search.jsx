@@ -122,6 +122,7 @@ function Search(props) {
 
      
         props.getTasks(data)
+        setSearch ('')
     }
 
 

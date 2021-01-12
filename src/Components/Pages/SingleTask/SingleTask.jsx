@@ -48,7 +48,7 @@ class SingleTask extends PureComponent {
         
         let { showEdit } = this.state;
         let { task } = this.props;
-        console.log(task)
+    
         
     
         return (
@@ -71,6 +71,10 @@ class SingleTask extends PureComponent {
                                     Created At <br />
                                     {formatDate(task.created_at)}
                                 </h5>
+                                <h6>
+                                    Status  <br />
+                                    {task.status}
+                                </h6>
                             </Card.Body>
                         </Card>
 
