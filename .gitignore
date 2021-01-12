@@ -1,5 +1,4 @@
 .DS_Store
-node_modules/*
 *node_modules/*
 uploads/*
 temp/*
@@ -20,6 +19,7 @@ temp/*
 *.bak
 */.bak
 /node_modules
-
-node_modules
+*.log
+*/logs/debug.log
+.env
 

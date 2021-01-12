@@ -2,9 +2,8 @@ import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-
 function Confirm(props) {
-  
+
   return (
 
     <Modal
@@ -15,18 +14,22 @@ function Confirm(props) {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title>Ar you sure to remov {props.count} tasks</Modal.Title>
+        <Modal.Title>
+          Ar you sure to remov
+           {props.count} 
+           tasks
+           </Modal.Title>
       </Modal.Header>
       <Modal.Footer>
-        <Button 
-        variant="warning"
-        onClick={props.onSubmit}
+        <Button
+          variant="warning"
+          onClick={props.onSubmit}
         >
           Delete Tasks
           </Button>
-        <Button 
-        variant="danger" 
-        onClick={props.onClose}
+        <Button
+          variant="danger"
+          onClick={props.onClose}
         >
           Close
           </Button>
@@ -35,7 +38,6 @@ function Confirm(props) {
 
   );
 
-
 };
 
 Confirm.propTypes = {
@@ -43,5 +45,7 @@ Confirm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired
 }
+
+
 
 export default Confirm;

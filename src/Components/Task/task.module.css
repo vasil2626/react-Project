@@ -1,6 +1,9 @@
 .card{
+
     margin: 15px auto;
-    border-color: rgba(9, 255, 0, 0.733);
+    border-color: rgb(255, 179, 80);
+ 
+   
 }
 
 .edit{
@@ -15,9 +18,8 @@
 
 
 .card:hover{
-    
     border-color: rgb(11, 132, 231);
-    
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 .data{
     font-size: 12px;
