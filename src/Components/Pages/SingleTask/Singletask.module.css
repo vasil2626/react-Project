@@ -7,17 +7,6 @@
     padding: 10px;
     text-align: center;
 }
-
-.edit{
-    padding: 5px;
-    text-align: center;
-}
-.delete{
-    padding: 5px;
-    text-align: center;
-}
-
-.notFound{
-    padding: 20px;
-    text-align: center;
+.delet{
+    margin: 10px;
 }

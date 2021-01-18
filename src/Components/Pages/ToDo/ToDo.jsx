@@ -96,9 +96,9 @@ class ToDo extends PureComponent {
 
     };
 
-    toggleSearch = () =>{
+    toggleSearch = () => {
         this.setState({
-            searchBar: ! this.state.searchBar
+            searchBar: !this.state.searchBar
         })
     }
 
@@ -110,34 +110,25 @@ class ToDo extends PureComponent {
             <Col key={task._id} xs={12} sm={6} md={4} lg={4} xl={3}>
                 <Task
                     data={task}
-                    from ='tasks'
+                    from='tasks'
                     disabled={!!selected.size}
                     onCheck={this.handleCheck}
                     onEdit={this.toggleEdit} />
-                    
+
             </Col>
         ))
 
         return (
             <>
                 <div className={styles.toDo}>
-                    { 
-                    searchBar && 
-                     <Search />
+                    {
+                        searchBar &&
+                        <Search />
 
-                     }
-               
-                <Button 
-                className={styles.serchButton}
-                variant="outline-primary"
-                onClick={this.toggleSearch}
-                disabled={selected.size}
-                >
-                 <FontAwesomeIcon icon={faSearch}/>
-                  Search
-                </Button>
-                    < Container>
-                        <Row className={'justify-content-center text-center mt-3'}>
+                    }
+
+                    < Container className={styles.toDo}>
+                        <Row className={'justify-content-center text-center mt-3' }>
                             <Col sm={8} xs={6} md={12} es={4}>
                                 <Button
                                     variant='outline-success'
@@ -146,40 +137,48 @@ class ToDo extends PureComponent {
                                 >
                                     Add Task
                                     </Button>
-                            </Col>
-                        </Row>
-                        <Row
-                            className={`justify-content-center text-center ${styles.buttonRemove}`}
-                        >
-                            <Col xs={4}>
+
                                 <Button
-                                    className='center'
+                                    className={styles.remuveBt}
                                     variant='outline-danger'
                                     onClick={this.toggleConfirm}
                                     disabled={!selected.size}
                                 >
                                     Remove Task
                             </Button>
+                                <Button
+                                    className={styles.serchButton}
+                                    variant="outline-primary"
+                                    onClick={this.toggleSearch}
+                                    disabled={selected.size}
+                                >
+                                    <FontAwesomeIcon icon={faSearch} />
+                                        Search
+                                </Button>
                             </Col>
                         </Row>
+
                         <Row>
                             {card}
                         </Row>
                     </Container>
+
                     {showConfirm &&
                         < Confirm
                             onSubmit={this.removeSelectid}
                             onClose={this.toggleConfirm}
                             count={selected.size}
                         />}
+
                     {!!editTask &&
                         <EditTaskModal
                             data={editTask}
-                            from = 'tasks'
+                            from='tasks'
                             onClose={() => { this.toggleEdit(null) }}
                         />
                     }
-                    { newTaskModal &&
+
+                    {newTaskModal &&
                         <AddTask
                             onClose={this.toggleNewTask}
                         />
@@ -204,7 +203,7 @@ let mapDispatchToProps = {
     getTasks,
     removeSelectid,
 
-    
+
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ToDo);

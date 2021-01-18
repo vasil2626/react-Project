@@ -1,11 +1,15 @@
 .searchBar{
-    display: flex;
     width: 100% auto;
-    height: 170px;
-    background-color: darkgray;
+    height: 100px;
+    /* background-color: whitesmoke; */
+    background-image: radial-gradient(gold,silver);
 
+  
 }
 
-.dates{
-    padding: 5px;
+.date {
+    margin:  5px;
+    float: left;
+    margin:  5px;
+    
 }

@@ -2,7 +2,7 @@ import React, { useState, memo } from 'react';
 import Styles from './search.module.css';
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
-import { Navbar, Nav, NavDropdown, Form, FormControl, Button, Col} from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Form, FormControl, Button, Col, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { getTasks } from '../../store/actions';
 
@@ -120,96 +120,102 @@ function Search(props) {
         if (sort) data.sort = sort.value;
         if (status) data.status = status.value;
 
-     
+
         props.getTasks(data)
-        setSearch ('')
+        setSearch('')
     }
 
 
     return (
-        <div className={Styles.searchBar}>
-            <Navbar expand="lg">
+        <>
+            <div className={Styles.searchBar}>
+                <Navbar expand="lg">
 
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="mr-auto">
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Collapse id="basic-navbar-nav">
+                        <Nav className="mr-auto">
 
-                        <NavDropdown title={status.value ? status.label : 'Status'} >
-                            {
-                                statusOptions.map((item, key) => {
-                                    return (
-                                        <NavDropdown.Item
-                                            key={key}
-                                            onClick={() => setStatus(item)}
-                                            active={status.value === item.value}
-                                        >
-                                            {item.label}
-                                        </NavDropdown.Item>
-                                    );
-                                })
-                            }
-                        </NavDropdown>
-                        <NavDropdown title={sort.value ? sort.label : 'Status'} >
-                            {
-                                sortOptions.map((sortitem, key) => {
-                                    return (
-                                        <NavDropdown.Item
-                                            key={key}
-                                            onClick={() => setSort(sortitem)}
-                                            active={sort.value === sortitem.value}
-                                        >
-                                            {sortitem.label}
-                                        </NavDropdown.Item>
-                                    );
-                                })
-                            }
-                        </NavDropdown>
-                    </Nav>
+                            <NavDropdown title={status.value ? status.label : 'Status'} >
+                                {
+                                    statusOptions.map((item, key) => {
+                                        return (
+                                            <NavDropdown.Item
+                                                key={key}
+                                                onClick={() => setStatus(item)}
+                                                active={status.value === item.value}
+                                            >
+                                                {item.label}
+                                            </NavDropdown.Item>
+                                        );
+                                    })
+                                }
+                            </NavDropdown>
+                            <NavDropdown title={sort.value ? sort.label : 'Status'} >
+                                {
+                                    sortOptions.map((sortitem, key) => {
+                                        return (
+                                            <NavDropdown.Item
+                                                key={key}
+                                                onClick={() => setSort(sortitem)}
+                                                active={sort.value === sortitem.value}
+                                            >
+                                                {sortitem.label}
+                                            </NavDropdown.Item>
+                                        );
+                                    })
+                                }
+                            </NavDropdown>
+                        </Nav>
 
-                    <Form inline>
-                        <FormControl
-                            className="mr-sm-2"
-                            type="text"
-                            value={search}
-                            placeholder="Search"
-                            onChange={(event) => setSearch(event.target.value)}
-                        />
-                        <Button
-                            variant="outline-success"
-                            onClick={handleSubmit}
-                        >
-                            Search
+                        <Form inline>
+                            <FormControl
+                                className="mr-sm-2"
+                                type="text"
+                                value={search}
+                                placeholder="Search"
+                                onChange={(event) => setSearch(event.target.value)}
+                            />
+                            <Button
+                                variant="success"
+                                onClick={handleSubmit}
+                            >
+                                Search
                             </Button>
-                    </Form>
-                </Navbar.Collapse>
-            </Navbar>
-            <div>
-                {
-                    dateOptions.map((item, index) => {
-                        return (
-                            <Col
-                            className={Styles.dates} 
-                            key={index} >
-                                <span>
-                                    <DatePicker
-                                        selected={dates[item.value]}
-                                        onChange={(date) => {
-                                            setDates({
-                                                ...dates,
-                                                [item.value]: date
-                                            })
-                                        }}
-                                    />
-                                </span>
-                                <span>{item.label} </span>
+                        </Form>
+                    </Navbar.Collapse>
+                </Navbar>
+                <div>
 
-                            </Col>
+                    {
+                        dateOptions.map((item, index) => {
+                            return (
 
-                        );
-                    })
-                }
+                                <Col key={index} >
+                                    <Row className={Styles.date}>
+                                        <div>  {item.label}  </div>
+                                        <DatePicker
+                                            className={Styles.dates}
+                                            placeholderText='select date'
+                                            selected={dates[item.value]}
+                                            onChange={(date) => {
+                                                setDates({
+                                                    ...dates,
+                                                    [item.value]: date
+                                                })
+                                            }}
+                                        />
+
+                                    </Row>
+
+
+                                </Col>
+
+                            );
+                        })
+                    }
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 
@@ -217,4 +223,4 @@ let mapDispatchToProps = {
     getTasks
 }
 
-export default connect(null,mapDispatchToProps)(memo(Search));
+export default connect(null, mapDispatchToProps)(memo(Search));

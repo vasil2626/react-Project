@@ -113,9 +113,8 @@ class SingleTask extends PureComponent {
                             icon={faEdit} />
                       Edit
                      </Button>
-                </div>
-                <div className={Styles.delete}>
-                    <Button
+                     <span className={Styles.delet}>
+                          <Button
                         variant="danger"
                         onClick={this.onRemuve}
                     >
@@ -123,6 +122,8 @@ class SingleTask extends PureComponent {
                             icon={faTrash} />
                        Delete
                       </Button>
+                     </span>
+                    
                 </div>
                
 

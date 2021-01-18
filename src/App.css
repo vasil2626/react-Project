@@ -1,4 +1,18 @@
-.spinerpos{
+
+.pageContainer{
     text-align: center;
-    padding: 300px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    text-decoration: none;
 }
+.pageWrapper{
+    flex: 1;
+}
+
+.spinerpos{
+    padding: 180px;
+    text-align: center;
+}
+
+

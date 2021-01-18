@@ -1,8 +1,15 @@
-
+.toDo{
+    height: 100%;
+    width: 100%;
+}
 .buttonRemove{
     padding: 10px;
 }
 
+.remuveBt{
+   margin:  5px;
+}
+
 .serchButton{
-    margin: 10px;
+    float: right;
 }
