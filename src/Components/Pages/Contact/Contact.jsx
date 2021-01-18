@@ -8,38 +8,20 @@ export default function Contacts() {
         <div className={Style.contact}>
             <Form.Group>
                 <Form.Row>
-                    <Form.Label column="lg" lg={2}>
+                    <Col>
                         Name
-                </Form.Label>
-                    <Col>
-                        <Form.Control size="lg" type="text" placeholder="Your name" />
-                    </Col>
-                </Form.Row>
-                <br />
-                <Form.Row>
-                    <Form.Label column lg={2}>
-                        Last Name
-                </Form.Label>
-                    <Col>
-                        <Form.Control type="text" placeholder="Your Last Name" />
-                    </Col>
-                </Form.Row>
-                <br />
-                <Form.Row>
-                    <Form.Label column="sm" lg={2}>
+                        <Form.Control size="sm" type="text" />
+                        <br />
                         Email
-                    </Form.Label>
-                    <Col>
-                        <Form.Control size="sm" type="email" placeholder="Your Email" />
+                        <Form.Control size="sm" type="text" />
                         <br />
                         <Form.Group controlId="exampleForm.ControlTextarea1">
-                            <Form.Label> Details</Form.Label>
+                            <Form.Label> Mesge</Form.Label>
                             <Form.Control as="textarea" rows={3} />
                         </Form.Group>
                         <br />
-                        <Button  variant="success"> Send </Button>
+                        <Button variant="success"> Send </Button>
                     </Col>
-
 
                 </Form.Row>
             </Form.Group>

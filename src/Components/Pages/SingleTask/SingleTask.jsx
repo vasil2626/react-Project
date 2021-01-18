@@ -45,35 +45,30 @@ class SingleTask extends PureComponent {
 
 
     render() {
-        
+
         let { showEdit } = this.state;
         let { task } = this.props;
-    
-        
-    
+
+
+
         return (
             <>
                 {!!task ?
                     <div className={Styles.cardTask}>
                         <Card>
                             <Card.Body>
-                                <h1> Title <br />
-                                    {task.title}
+                                <h1> <span className={Styles.title}>Title:</span>   {task.title}
                                 </h1>
-                                <h2> <u>Deskription</u> <br />
-                                    {task.description}
+                                <h2 ><span className={Styles.title}>Description:</span>  <br /> {task.description}
                                 </h2>
                                 <h4>
-                                    Date <br />
-                                    {formatDate(task.date)}
+                                    Date: {formatDate(task.date)}
                                 </h4>
                                 <h5>
-                                    Created At <br />
-                                    {formatDate(task.created_at)}
+                                    Created At: {formatDate(task.created_at)}
                                 </h5>
                                 <h6>
-                                    Status  <br />
-                                    {task.status}
+                                    Status: {task.status}
                                 </h6>
                             </Card.Body>
                         </Card>
@@ -84,8 +79,8 @@ class SingleTask extends PureComponent {
                     </div>
                 }
                 <div className={Styles.statusButton}>
-                {
-                      task && task.status === 'active' ?
+                    {
+                        task && task.status === 'active' ?
                             <Button
                                 variant="success"
                                 onClick={() => this.props.changeTaskStatus(task._id, { status: 'done' }, 'single')}
@@ -96,14 +91,14 @@ class SingleTask extends PureComponent {
                             <Button
                                 variant="warning"
                                 onClick={() => this.props.changeTaskStatus(task._id, { status: 'active' }, 'single')}
-                        
+
                             >
                                 <FontAwesomeIcon icon={faHistory} />
                                 Done
                             </Button>
                     }
                 </div>
-           
+
                 <div className={Styles.cardTask}>
                     <Button
                         variant="warning"
@@ -113,19 +108,19 @@ class SingleTask extends PureComponent {
                             icon={faEdit} />
                       Edit
                      </Button>
-                     <span className={Styles.delet}>
-                          <Button
-                        variant="danger"
-                        onClick={this.onRemuve}
-                    >
-                        <FontAwesomeIcon
-                            icon={faTrash} />
+                    <span className={Styles.delet}>
+                        <Button
+                            variant="danger"
+                            onClick={this.onRemuve}
+                        >
+                            <FontAwesomeIcon
+                                icon={faTrash} />
                        Delete
                       </Button>
-                     </span>
-                    
+                    </span>
+
                 </div>
-               
+
 
                 {
                     showEdit &&

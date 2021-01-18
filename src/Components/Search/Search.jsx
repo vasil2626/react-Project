@@ -41,22 +41,22 @@ let sortOptions = [
     },
 
     {
-        label: 'Creation date oldest',
+        label: 'Creation date oldest ',
         value: 'creation_date_oldest'
     },
 
     {
-        label: 'Creation date newst',
+        label: 'Creation date newst ',
         value: 'creation_date_newest'
     },
 
     {
-        label: 'completion date oldest',
+        label: 'completion date oldest ',
         value: 'completion_date_oldest'
     },
 
     {
-        label: 'completion date newest',
+        label: 'completion date newest ',
         value: 'completion_date_newest'
     },
 ];
@@ -64,7 +64,7 @@ let sortOptions = [
 let dateOptions = [
 
     {
-        label: 'Create later than',
+        label: 'Create later than ',
         value: 'create_lte'
     },
 
@@ -144,7 +144,7 @@ function Search(props) {
                                                 onClick={() => setStatus(item)}
                                                 active={status.value === item.value}
                                             >
-                                                {item.label}
+                                                {item.label} 
                                             </NavDropdown.Item>
                                         );
                                     })

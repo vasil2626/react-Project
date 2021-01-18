@@ -11,12 +11,12 @@ function AboutUs() {
                     <h1>Hello</h1>
                     <p>
                         this application is provided for creating different tasks and details about it<br/>
-                        <p className={Style.paragraf}>
+                        <span className={Style.paragraf}>
                         !!! Attention
                         this application is for educational purposes only
                         and you are not advised to keep the information it may contain personal data
                         otherwise the application developer will not be responsible for your data
-                        </p>
+                        </span>
                       
                     </p>
                 </Container>

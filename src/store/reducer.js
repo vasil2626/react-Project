@@ -83,7 +83,7 @@ let reducer = (state = defaultState, action) => {
                 task: task,
                 removeTaskSuccess: true,
                 loading: false,
-                successMessage: 'Selected Tassk Removed Successfully  👍',
+                successMessage: 'Selected Task Removed Successfully  👍',
             }
 
         }
@@ -116,9 +116,9 @@ let reducer = (state = defaultState, action) => {
         case actionTypes.CHANGE_TASK_STATUS_SUCCESS: {
             let mesage;
             if(action.task.status === 'done'){
-                mesage = 'the task completed  👍'
+                mesage = 'The task completed  👍'
             }else{
-                mesage = 'rhe task is active now  😉'
+                mesage = 'The task is active now  😉'
             }
             if (action.from === 'single') {
                 return {
