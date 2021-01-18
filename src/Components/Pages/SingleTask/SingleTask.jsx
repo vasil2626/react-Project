@@ -57,10 +57,11 @@ class SingleTask extends PureComponent {
                     <div className={Styles.cardTask}>
                         <Card>
                             <Card.Body>
-                                <h1> <span className={Styles.title}>Title:</span>   {task.title}
-                                </h1>
-                                <h2 ><span className={Styles.title}>Description:</span>  <br /> {task.description}
-                                </h2>
+                                <h1> Title:  {task.title}</h1>
+                                <h2 >Description: </h2>
+                                <br /> <p>
+                                    {task.description}
+                                </p>
                                 <h4>
                                     Date: {formatDate(task.date)}
                                 </h4>
