@@ -158,9 +158,9 @@ let reducer = (state = defaultState, action) => {
         case actionTypes.SEND_MESAGE_SUCCESS: {
             return {
                 ...state,
-                sendMessage: action.message,
+                sendMessage: action.mesage,
                 loading: false,
-                successMessage: 'Message sent  📩',
+                successMessage: 'Message sent successfully  📩',
             }
         }
       

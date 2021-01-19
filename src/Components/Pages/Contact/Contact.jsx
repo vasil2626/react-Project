@@ -11,18 +11,32 @@ import { senMessage } from '../../../store/actions'
         name: '',
         email: '',
         message: ''
+        
     })
 
     let handleChange = (event) =>{
         let{ name, value} = event.target;
         setValues({
             ...values,
-            [name]:value
+            [name]:value,
         })
     }
 
 
-    let message = {...values}
+    
+    let handleclick = () =>{
+        let message = {...values}
+        if(!message.email){
+            return
+        }
+        props.senMessage(message)
+        setValues({
+            ...values,
+            name: '',
+            email: '',
+            message: ''
+        })
+    }
 
     return (
         <div className={Style.contact}>
@@ -34,6 +48,7 @@ import { senMessage } from '../../../store/actions'
                         <Form.Control 
                         onChange={handleChange}
                         name='name'
+                        value={values.name}
                         size="sm" 
                         type="text" 
                         />
@@ -42,6 +57,7 @@ import { senMessage } from '../../../store/actions'
                         <Form.Control
                         onChange={handleChange} 
                         name='email'
+                        value={values.email}
                         size="sm" 
                         type="text" />
                         <br />
@@ -53,6 +69,7 @@ import { senMessage } from '../../../store/actions'
                             <Form.Control 
                             onChange={handleChange}
                             name='message'
+                            value={values.message}
                             as="textarea"
                              rows={3}
                              />
@@ -60,7 +77,7 @@ import { senMessage } from '../../../store/actions'
                         <br />
                         <Button 
                         variant="success"
-                        onClick={() =>  props.senMessage(message) }
+                        onClick={handleclick}
                         >
                              Send 
                              </Button>

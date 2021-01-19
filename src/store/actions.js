@@ -148,13 +148,15 @@ function getSingleTask(taskId) {
 
 export { getSingleTask };
 
-function senMessage(message) {
-console.log(message)
+
+function senMessage(mess) {
+ 
+console.log('mesage ', mess)
     return (dispatch) => {
         dispatch({ type: actionTypes.LOADING });
-        requst(`${apiUrl}/form`, 'POST', message )
+        requst(`${apiUrl}/form`, 'POST', mess)
             .then(res => {
-                dispatch({ type: actionTypes.SEND_MESAGE_SUCCESS,  message : res})
+                dispatch({ type: actionTypes.SEND_MESAGE_SUCCESS,  mesage: res })
             })
             .catch(err => {
                 dispatch({
