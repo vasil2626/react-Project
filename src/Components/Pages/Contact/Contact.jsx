@@ -6,6 +6,7 @@ import { Form, Col, Button } from 'react-bootstrap';
 export default function Contacts() {
     return (
         <div className={Style.contact}>
+            <h1>Contact us</h1>
             <Form.Group>
                 <Form.Row>
                     <Col>

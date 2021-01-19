@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import { getTasks, removeSelectid } from '../../../store/actions'
 
 
+
 class ToDo extends PureComponent {
     state = {
         selected: new Set(),
@@ -107,7 +108,7 @@ class ToDo extends PureComponent {
         let { selected, showConfirm, editTask, newTaskModal, searchBar } = this.state;
         let { task } = this.props;
         let card = task.map((task) => (
-            <Col key={task._id} xs={12} sm={6} md={4} lg={4} xl={3}>
+            <Col key={task._id} xs={12} sm={6} md={4} lg={3} xl={3} es={6}>
                 <Task
                     data={task}
                     from='tasks'
@@ -120,71 +121,77 @@ class ToDo extends PureComponent {
 
         return (
             <>
-                <div className={styles.toDo}>
-                    {
-                        searchBar &&
-                        <Search />
 
-                    }
 
-                    < Container className={styles.toDo}>
-                        <Row className={'justify-content-center text-center mt-3' }>
-                            <Col sm={8} xs={6} md={12} es={4}>
-                                <Button
-                                    variant='outline-success'
-                                    onClick={this.toggleNewTask}
-                                    disabled={selected.size}
-                                >
-                                    Add Task
+                <Col className={styles.toDo}>
+                    <Row>
+
+                        {
+                            searchBar &&
+                            <Search />
+
+                        }
+
+                        < Container className={styles.toDo}>
+                            <Row className={'justify-content-center text-center mt-3'}>
+                                <Col >
+                                    <Button
+                                        variant='outline-success'
+                                        onClick={this.toggleNewTask}
+                                        disabled={selected.size}
+                                    >
+                                        Add Task
                                     </Button>
 
-                                <Button
-                                    className={styles.remuveBt}
-                                    variant='outline-danger'
-                                    onClick={this.toggleConfirm}
-                                    disabled={!selected.size}
-                                >
-                                    Remove Task
+                                    <Button
+                                        className={styles.remuveBt}
+                                        variant='outline-danger'
+                                        onClick={this.toggleConfirm}
+                                        disabled={!selected.size}
+                                    >
+                                        Remove Task
                             </Button>
-                                <Button
-                                    className={styles.serchButton}
-                                    variant="outline-primary"
-                                    onClick={this.toggleSearch}
-                                    disabled={selected.size}
-                                >
-                                    <FontAwesomeIcon icon={faSearch} />
+                                    <Button
+                                        className={styles.serchButton}
+                                        variant="outline-primary"
+                                        onClick={this.toggleSearch}
+                                        disabled={selected.size}
+                                    >
+                                        <FontAwesomeIcon icon={faSearch} />
                                         Search
                                 </Button>
-                            </Col>
-                        </Row>
+                                </Col>
+                            </Row>
 
-                        <Row>
-                            {card}
-                        </Row>
-                    </Container>
+                            <Row>
+                                {card}
+                            </Row>
+                        </Container>
 
-                    {showConfirm &&
-                        < Confirm
-                            onSubmit={this.removeSelectid}
-                            onClose={this.toggleConfirm}
-                            count={selected.size}
-                        />}
 
-                    {!!editTask &&
-                        <EditTaskModal
-                            data={editTask}
-                            from='tasks'
-                            onClose={() => { this.toggleEdit(null) }}
-                        />
-                    }
+                        {showConfirm &&
+                            < Confirm
+                                onSubmit={this.removeSelectid}
+                                onClose={this.toggleConfirm}
+                                count={selected.size}
+                            />}
 
-                    {newTaskModal &&
-                        <AddTask
-                            onClose={this.toggleNewTask}
-                        />
-                    }
+                        {!!editTask &&
+                            <EditTaskModal
+                                data={editTask}
+                                from='tasks'
+                                onClose={() => { this.toggleEdit(null) }}
+                            />
+                        }
 
-                </div>
+                        {newTaskModal &&
+                            <AddTask
+                                onClose={this.toggleNewTask}
+                            />
+                        }
+
+                    </Row>
+                </Col>
             </>
         );
     };

@@ -43,7 +43,7 @@ function Task(props) {
                         </Link>
                 </Card.Title>
                 <Card.Text>
-                    Deskription:
+                    Description:
                         {task.description.slice(0, 10)}
                 </Card.Text>
                 <Card.Text className={styles.data}>

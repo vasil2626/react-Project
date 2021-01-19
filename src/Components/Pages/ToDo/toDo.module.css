@@ -2,14 +2,7 @@
     height: 100%;
     width: 100%;
 }
-.buttonRemove{
+.toDo button{
     padding: 10px;
-}
-
-.remuveBt{
-   margin:  5px;
-}
-
-.serchButton{
-    float: right;
+    margin:  5px;
 }

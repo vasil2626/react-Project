@@ -128,7 +128,7 @@ function Search(props) {
 
     return (
         <>
-            <div className={Styles.searchBar}>
+            <Col  lg={8} md={6} sm={4} xl={8} es={8} className={Styles.searchBar}>
                 <Navbar expand="lg">
 
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -204,6 +204,7 @@ function Search(props) {
                                                 })
                                             }}
                                         />
+                                        
 
                                     </Row>
 
@@ -214,7 +215,7 @@ function Search(props) {
                         })
                     }
                 </div>
-            </div>
+            </Col>
         </>
     );
 };
