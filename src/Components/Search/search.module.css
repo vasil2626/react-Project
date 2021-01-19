@@ -1,14 +1,7 @@
-.searchBar{
-    display: block;
-  
-    left: 210px;
- 
-
-}
 
 .date {
-    margin:  5px;
-    float: left;
+    
+    justify-content: center;
     margin:  5px;
     
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Jumbotron, Container} from 'react-bootstrap';
-
 import Style from './About.module.css';
+
 
 function AboutUs() {
     return (
@@ -25,5 +25,7 @@ function AboutUs() {
 
     );
 }
+
+
 
 export default AboutUs;

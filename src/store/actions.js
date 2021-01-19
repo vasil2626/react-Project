@@ -132,7 +132,7 @@ function getSingleTask(taskId) {
 
     return (dispatch) => {
         dispatch({ type: actionTypes.LOADING });
-        requst(`${apiUrl}/task/${taskId}`)
+        requst(`${apiUrl}/task/${taskId}` )
             .then(res => {
                 dispatch({ type: actionTypes.GET_SINGLE_TASK_SUCCESS, singleTask: res})
             })
@@ -147,3 +147,23 @@ function getSingleTask(taskId) {
 }
 
 export { getSingleTask };
+
+function senMessage(message) {
+console.log(message)
+    return (dispatch) => {
+        dispatch({ type: actionTypes.LOADING });
+        requst(`${apiUrl}/form`, 'POST', message )
+            .then(res => {
+                dispatch({ type: actionTypes.SEND_MESAGE_SUCCESS,  message : res})
+            })
+            .catch(err => {
+                dispatch({
+                    type: actionTypes.ERROR,
+                    error: err.message
+                })
+            })
+    }
+
+}
+
+export { senMessage };
