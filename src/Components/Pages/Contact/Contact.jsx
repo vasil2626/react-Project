@@ -9,7 +9,7 @@ import { sendMessage } from '../../../store/actions'
 class Contacts extends PureComponent {
 
     state = {
-        sendForm: this.props.sendForm,
+        formerror: '',
         name: '',
         email: '',
         message: ''
@@ -28,9 +28,11 @@ class Contacts extends PureComponent {
     handleclick = () => {
 
         let { name, email, message } = this.state;
-
-        if (!name && email && message) {
-            return
+        
+        if (! email || ! name || ! message) {
+            this.setState({
+                formerror: "! the introduction field must not be empty"
+            })
         }
         let mesagdata = {
             name,
@@ -38,14 +40,14 @@ class Contacts extends PureComponent {
             message
         }
         this.props.sendMessage(mesagdata)
+        
    
     }
 
     componentDidUpdate(prevProps){
  
        if(!prevProps.sendForm &&  this.props.sendForm){
-         this.setState({
-            sendForm: !this.state.sendForm, 
+         this.setState({ 
             name: '',
             email: '',
             message: ''
@@ -57,10 +59,14 @@ class Contacts extends PureComponent {
     }
 
     render() {
-
+        let{formerror} = this.state
         return (
             <div className={Style.contact}>
                 <h1>Contact us</h1>
+                {
+                    !! formerror &&
+                    <h4 className={Style.error}>{formerror}</h4>
+                }
                 <Form.Group>
                     <Form.Row>
                         <Col>

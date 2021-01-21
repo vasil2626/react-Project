@@ -31,6 +31,7 @@ let reducer = (state = defaultState, action) => {
                 edidTaskSuccess: false,
                 successMessage: null,
                 removeTaskSuccess: false,
+                sendForm: false,
                 addTaskSuccess: false
             }
         }
@@ -160,7 +161,7 @@ let reducer = (state = defaultState, action) => {
             return {
                 ...state,
                 sendMessage: action.mesage,
-                sendForm: !defaultState.sendForm,
+                sendForm: true,
                 loading: false,
                 successMessage: 'Message sent successfully  📩',
             }
