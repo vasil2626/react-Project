@@ -9,6 +9,7 @@ import { sendMessage } from '../../../store/actions'
 class Contacts extends PureComponent {
 
     state = {
+        sendForm: this.props.sendForm,
         name: '',
         email: '',
         message: ''
@@ -44,6 +45,7 @@ class Contacts extends PureComponent {
  
        if(!prevProps.sendForm &&  this.props.sendForm){
          this.setState({
+            sendForm: !this.state.sendForm, 
             name: '',
             email: '',
             message: ''
