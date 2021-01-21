@@ -123,7 +123,7 @@ class Contacts extends PureComponent {
 
 
 function MapStateToProps(state) {
-    console.log(state)
+   
     return {
         sendForm: state.sendForm
     };
