@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import Style from './Contact.module.css';
 import { Form, Col, Button } from 'react-bootstrap';
 import { connect } from 'react-redux'
@@ -6,7 +6,7 @@ import { sendMessage } from '../../../store/actions'
 
 
 
-class Contacts extends PureComponent {
+class Contacts extends Component {
 
     state = {
         formerror: '',
@@ -28,8 +28,8 @@ class Contacts extends PureComponent {
     handleclick = () => {
 
         let { name, email, message } = this.state;
-        
-        if (! email || ! name || ! message) {
+
+        if (!email || !name || !message) {
             this.setState({
                 formerror: "! the introduction field must not be empty"
             })
@@ -40,31 +40,31 @@ class Contacts extends PureComponent {
             message
         }
         this.props.sendMessage(mesagdata)
-        
-   
+
+
     }
 
-    componentDidUpdate(prevProps){
- 
-       if(!prevProps.sendForm &&  this.props.sendForm){
-         this.setState({ 
-            name: '',
-            email: '',
-            message: ''
-           })
-       }
-       
+    componentDidUpdate(prevProps) {
 
-      
+        if (!prevProps.sendForm && this.props.sendForm) {
+            this.setState({
+                formerror: '',
+                name: '',
+                email: '',
+                message: ''
+            })
+        }
+
     }
+
 
     render() {
-        let{formerror} = this.state
+        let { formerror } = this.state
         return (
             <div className={Style.contact}>
                 <h1>Contact us</h1>
                 {
-                    !! formerror &&
+                    !!formerror &&
                     <h4 className={Style.error}>{formerror}</h4>
                 }
                 <Form.Group>
@@ -123,7 +123,7 @@ class Contacts extends PureComponent {
 
 
 function MapStateToProps(state) {
-   
+
     return {
         sendForm: state.sendForm
     };
