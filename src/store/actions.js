@@ -149,9 +149,8 @@ function getSingleTask(taskId) {
 export { getSingleTask };
 
 
-function senMessage(mess) {
+function sendMessage(mess) {
  
-console.log('mesage ', mess)
     return (dispatch) => {
         dispatch({ type: actionTypes.LOADING });
         requst(`${apiUrl}/form`, 'POST', mess)
@@ -168,4 +167,4 @@ console.log('mesage ', mess)
 
 }
 
-export { senMessage };
+export { sendMessage };

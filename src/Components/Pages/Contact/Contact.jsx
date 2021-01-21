@@ -1,97 +1,128 @@
-import React, {useState} from 'react';
+import React, { PureComponent } from 'react';
 import Style from './Contact.module.css';
 import { Form, Col, Button } from 'react-bootstrap';
 import { connect } from 'react-redux'
-import { senMessage } from '../../../store/actions'
+import { sendMessage } from '../../../store/actions'
 
 
- function Contacts(props) {
 
-    let[values, setValues] = useState({
+class Contacts extends PureComponent {
+
+    state = {
         name: '',
         email: '',
         message: ''
-        
-    })
+    }
 
-    let handleChange = (event) =>{
-        let{ name, value} = event.target;
-        setValues({
-            ...values,
-            [name]:value,
+
+    handleChange = (event) => {
+        let { name, value } = event.target;
+        this.setState({
+            [name]: value,
         })
     }
 
 
-    
-    let handleclick = () =>{
-        let message = {...values}
-        if(!message.email){
+
+    handleclick = () => {
+
+        let { name, email, message } = this.state;
+
+        if (!name && email && message) {
             return
         }
-        props.senMessage(message)
-        setValues({
-            ...values,
+        let mesagdata = {
+            name,
+            email,
+            message
+        }
+        this.props.sendMessage(mesagdata)
+   
+    }
+
+    componentDidUpdate(prevProps){
+ 
+       if(!prevProps.sendForm &&  this.props.sendForm){
+         this.setState({
             name: '',
             email: '',
             message: ''
-        })
+           })
+       }
+       
+
+      
     }
 
-    return (
-        <div className={Style.contact}>
-            <h1>Contact us</h1>
-            <Form.Group>
-                <Form.Row>
-                    <Col>
-                        Name
-                        <Form.Control 
-                        onChange={handleChange}
-                        name='name'
-                        value={values.name}
-                        size="sm" 
-                        type="text" 
-                        />
-                        <br />
-                        Email
-                        <Form.Control
-                        onChange={handleChange} 
-                        name='email'
-                        value={values.email}
-                        size="sm" 
-                        type="text" />
-                        <br />
-                        <Form.Group 
-                        controlId="exampleForm.ControlTextarea1">
-                            <Form.Label>
-                                 Mesge
-                                 </Form.Label>
-                            <Form.Control 
-                            onChange={handleChange}
-                            name='message'
-                            value={values.message}
-                            as="textarea"
-                             rows={3}
-                             />
-                        </Form.Group>
-                        <br />
-                        <Button 
-                        variant="success"
-                        onClick={handleclick}
-                        >
-                             Send 
-                             </Button>
-                    </Col>
+    render() {
 
-                </Form.Row>
-            </Form.Group>
+        return (
+            <div className={Style.contact}>
+                <h1>Contact us</h1>
+                <Form.Group>
+                    <Form.Row>
+                        <Col>
+                            Name
+                    <Form.Control
+                                onChange={this.handleChange}
+                                name='name'
+                                value={this.state.name}
+                                size="sm"
+                                type="text"
+                            />
+                            <br />
+                    Email
+                    <Form.Control
+                                onChange={this.handleChange}
+                                name='email'
+                                value={this.state.email}
+                                size="sm"
+                                type="text" />
+                            <br />
+                            <Form.Group
+                                controlId="exampleForm.ControlTextarea1">
+                                <Form.Label>
+                                    Mesge
+                             </Form.Label>
+                                <Form.Control
+                                    onChange={this.handleChange}
+                                    name='message'
+                                    value={this.state.message}
+                                    as="textarea"
+                                    rows={3}
+                                />
+                            </Form.Group>
+                            <br />
+                            <Button
+                                variant="success"
+                                onClick={this.handleclick}
+                            >
+                                Send
+                         </Button>
+                        </Col>
 
-        </div>
-    );
-};
+                    </Form.Row>
+                </Form.Group>
 
-let mapDispatchToprops ={
-    senMessage
+            </div>
+        )
+
+
+
+    };
 }
 
-export default connect(null, mapDispatchToprops)(Contacts);
+
+
+function MapStateToProps(state) {
+    console.log(state)
+    return {
+        sendForm: state.sendForm
+    };
+}
+
+let mapDispatchToprops = {
+    sendMessage
+}
+
+export default connect(MapStateToProps, mapDispatchToprops)(Contacts);

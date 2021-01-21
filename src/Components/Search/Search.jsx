@@ -128,11 +128,10 @@ function Search(props) {
 
     return (
         <>
-            <Col  lg={8} md={6} sm={4} xl={12} es={8} className={Styles.searchBar}>
+            <Col  lg={6} md={12} sm={6} xl={12} es={6}  className={Styles.searchBar}>
                 <Navbar expand="lg">
 
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
+           
                         <Nav className="mr-auto">
 
                             <NavDropdown title={status.value ? status.label : 'Status'} >
@@ -182,7 +181,7 @@ function Search(props) {
                                 Search
                             </Button>
                         </Form>
-                    </Navbar.Collapse>
+                  
                 </Navbar>
                 <div>
 
