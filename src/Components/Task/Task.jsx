@@ -4,6 +4,7 @@ import { Button, Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit, faCheck, faHistory } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
+import Confirm from '../../Components/Confirm/Confirm';
 import { formatDate } from '../../Support/utilit';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -22,7 +23,22 @@ function Task(props) {
         onCheck(data._id, from);
     }
 
+    let [deleteConfirm, setDeleteConfirm] = useState({ deleteConfirm: false, })
 
+    let handleRemuve = () => {
+        setDeleteConfirm()
+    }
+
+    let removeSelectid = () => {
+        props.remuveTask(task._id, props.from)
+    }
+
+    let toggleConfirm = () => {
+        setDeleteConfirm({
+            ...deleteConfirm,
+            deleteConfirm: false
+        })
+    }
 
     let task = props.data
     let { disabled } = props
@@ -78,7 +94,6 @@ function Task(props) {
                         </Button>
                 }
 
-
                 <Button
                     variant="info"
                     className={styles.edit}
@@ -92,11 +107,20 @@ function Task(props) {
                     variant="danger"
                     className={styles.delete}
                     disabled={disabled}
-                    onClick={() => props.remuveTask(task._id, props.from)}
+                    onClick={handleRemuve}
 
                 >
                     <FontAwesomeIcon icon={faTrash} />
                 </Button>
+                {
+                    !deleteConfirm &&
+                    <Confirm
+                        onSubmit={removeSelectid}
+                        onClose={toggleConfirm}
+                        count={'this'}
+                    />
+
+                }
             </Card.Body>
         </Card>
     );

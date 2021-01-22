@@ -4,20 +4,35 @@ import { formatDate } from '../../../Support/utilit';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit, faHistory, faCheck } from '@fortawesome/free-solid-svg-icons';
 import EditTaskModal from '../../EditTaskModal/EditTaskModal';
+import Confirm from '../../Confirm/Confirm';
 import { Card, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { getSingleTask, remuveTask, changeTaskStatus } from '../../../store/actions';
 
 class SingleTask extends PureComponent {
     state = {
-        showEdit: false
+        showEdit: false,
+        showConfirm: false
     };
 
     onRemuve = () => {
+        this.setState({
+            showConfirm: !this.state.showConfirm
+        })
+
+    }
+
+    deleteConfirm = () => {
         let taskId = this.props.match.params.id
         const from = 'single';
         this.props.remuveTask(taskId, { from: from })
         this.props.history.push('/')
+    }
+
+    toggleConfirm = () => {
+        this.setState({
+            showConfirm: false
+        })
     }
 
 
@@ -46,7 +61,7 @@ class SingleTask extends PureComponent {
 
     render() {
 
-        let { showEdit } = this.state;
+        let { showEdit, showConfirm } = this.state;
         let { task } = this.props;
 
 
@@ -122,7 +137,6 @@ class SingleTask extends PureComponent {
 
                 </div>
 
-
                 {
                     showEdit &&
                     <EditTaskModal
@@ -132,6 +146,15 @@ class SingleTask extends PureComponent {
                         onClose={this.toggleTask}
                     />
 
+                }
+
+                {
+                    showConfirm &&
+                    <Confirm
+                        onSubmit={this.deleteConfirm}
+                        onClose={this.toggleConfirm}
+                        count={'this'}
+                    />
                 }
 
             </>

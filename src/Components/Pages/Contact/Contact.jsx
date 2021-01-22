@@ -4,8 +4,6 @@ import { Form, Col, Button } from 'react-bootstrap';
 import { connect } from 'react-redux'
 import { sendMessage } from '../../../store/actions'
 
-
-
 class Contacts extends Component {
 
     state = {
@@ -15,14 +13,12 @@ class Contacts extends Component {
         message: ''
     }
 
-
     handleChange = (event) => {
         let { name, value } = event.target;
         this.setState({
             [name]: value,
         })
     }
-
 
 
     handleclick = () => {
@@ -56,7 +52,6 @@ class Contacts extends Component {
         }
 
     }
-
 
     render() {
         let { formerror } = this.state
@@ -119,7 +114,6 @@ class Contacts extends Component {
 
     };
 }
-
 
 
 function MapStateToProps(state) {

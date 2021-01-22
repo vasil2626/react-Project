@@ -160,7 +160,7 @@ function sendMessage(mess) {
             .catch(err => {
                 dispatch({
                     type: actionTypes.ERROR,
-                    error: err.message
+                   
                 })
             })
     }
