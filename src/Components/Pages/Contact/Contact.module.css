@@ -1,0 +1,10 @@
+.contact{
+    margin: auto;
+    padding-top: 20px;
+    width: 500px;
+
+}
+.error{
+    color: red;
+    font-family:Arial, Helvetica, sans-serif;
+}

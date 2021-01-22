@@ -1,0 +1,10 @@
+.footer{
+    background-image: radial-gradient(rgb(19, 18, 18),#343a40);
+    color: #fff;
+    text-align: center;
+}
+
+.footer a{
+    text-decoration: none;
+    color:#ffa733;
+}

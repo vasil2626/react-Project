@@ -7,6 +7,8 @@ import AboutUs from './Components/Pages/AboutUs/AboutUs';
 import SingleTask from './Components/Pages/SingleTask/SingleTask';
 import PageNot from './Components/Pages/NotfoundPage/PageNot';
 import NavMenue from './Components/NavBar/Navbar';
+import Contacts from './Components/Pages/Contact/Contact';
+import FooterPage from '../src/Components/Footer/Footer';
 import { Spinner } from 'react-bootstrap';
 import { ToastContainer, toast, Flip } from 'react-toastify';
 import { Route, Switch, Redirect } from 'react-router-dom';
@@ -24,17 +26,28 @@ function App(props) {
   }
 
   return (
-    <div className="App">
-      <NavMenue />
+    <div className='pageContainer'>
 
-      <Switch>
-        <Route path='/' exact component={ToDo} />
-        <Route path="/task" exact component={ToDo} />
-        <Route path='/about' exact component={AboutUs} />
-        <Route path="/task/:id" exact component={SingleTask} />
-        <Route to='/404' exact component={PageNot} />
-        <Redirect to='/404' />
-      </Switch>
+      <div className='pageWrapper'>
+
+
+
+        <NavMenue />
+
+        <Switch>
+
+          <Route path='/' exact component={ToDo} />
+          <Route path='/task' exact component={ToDo} />
+          <Route path='/about' exact component={AboutUs} />
+          <Route path='/contact' exact component={Contacts} />
+          <Route path='/task/:id' exact component={SingleTask} />
+          <Route to='/404' exact component={PageNot} />
+          <Redirect to='/404' />
+
+        </Switch>
+
+      </div>
+
 
       <ToastContainer
         position="bottom-left"
@@ -53,7 +66,7 @@ function App(props) {
           <Spinner animation="border" variant="warning" />
         </div>
       }
-
+      <FooterPage />
     </div>
   );
 

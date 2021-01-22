@@ -1,8 +1,8 @@
-
-.buttonRemove{
-    padding: 10px;
+.toDo{
+    height: 100%;
+    width: 100%;
 }
-
-.serchButton{
-    margin: 10px;
+.toDo button{
+    
+    margin:  5px;
 }

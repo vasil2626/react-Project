@@ -7,7 +7,9 @@ let defaultState = {
     successMessage: null,
     addTaskSuccess: false,
     removeTaskSuccess: false,
+    sendMessage: false,
     edidTaskSuccess: false,
+    sendForm: false,
     loading: false
 }
 
@@ -29,6 +31,7 @@ let reducer = (state = defaultState, action) => {
                 edidTaskSuccess: false,
                 successMessage: null,
                 removeTaskSuccess: false,
+                sendForm: false,
                 addTaskSuccess: false
             }
         }
@@ -83,7 +86,7 @@ let reducer = (state = defaultState, action) => {
                 task: task,
                 removeTaskSuccess: true,
                 loading: false,
-                successMessage: 'Selected Tassk Removed Successfully  👍',
+                successMessage: 'Selected Task Removed Successfully  👍',
             }
 
         }
@@ -116,9 +119,9 @@ let reducer = (state = defaultState, action) => {
         case actionTypes.CHANGE_TASK_STATUS_SUCCESS: {
             let mesage;
             if(action.task.status === 'done'){
-                mesage = 'the task completed  👍'
+                mesage = 'The task completed  👍'
             }else{
-                mesage = 'rhe task is active now  😉'
+                mesage = 'The task is active now  😉'
             }
             if (action.from === 'single') {
                 return {
@@ -154,11 +157,20 @@ let reducer = (state = defaultState, action) => {
             }
 
         }
+        case actionTypes.SEND_MESAGE_SUCCESS: {
+            return {
+                ...state,
+                sendForm: true,
+                loading: false,
+                successMessage: 'Message sent successfully  📩',
+            }
+        }
       
 
         default: return state
     }
 
 }
+
 
 export { reducer };

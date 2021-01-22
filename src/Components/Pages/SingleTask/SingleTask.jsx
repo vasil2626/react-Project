@@ -4,20 +4,35 @@ import { formatDate } from '../../../Support/utilit';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit, faHistory, faCheck } from '@fortawesome/free-solid-svg-icons';
 import EditTaskModal from '../../EditTaskModal/EditTaskModal';
+import Confirm from '../../Confirm/Confirm';
 import { Card, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { getSingleTask, remuveTask, changeTaskStatus } from '../../../store/actions';
 
 class SingleTask extends PureComponent {
     state = {
-        showEdit: false
+        showEdit: false,
+        showConfirm: false
     };
 
     onRemuve = () => {
+        this.setState({
+            showConfirm: !this.state.showConfirm
+        })
+
+    }
+
+    deleteConfirm = () => {
         let taskId = this.props.match.params.id
         const from = 'single';
         this.props.remuveTask(taskId, { from: from })
         this.props.history.push('/')
+    }
+
+    toggleConfirm = () => {
+        this.setState({
+            showConfirm: false
+        })
     }
 
 
@@ -45,35 +60,31 @@ class SingleTask extends PureComponent {
 
 
     render() {
-        
-        let { showEdit } = this.state;
+
+        let { showEdit, showConfirm } = this.state;
         let { task } = this.props;
-    
-        
-    
+
+
+
         return (
             <>
                 {!!task ?
                     <div className={Styles.cardTask}>
                         <Card>
                             <Card.Body>
-                                <h1> Title <br />
-                                    {task.title}
-                                </h1>
-                                <h2> <u>Deskription</u> <br />
+                                <h1> Title:  {task.title}</h1>
+                                <h2 >Description: </h2>
+                                <br /> <p>
                                     {task.description}
-                                </h2>
+                                </p>
                                 <h4>
-                                    Date <br />
-                                    {formatDate(task.date)}
+                                    Date: {formatDate(task.date)}
                                 </h4>
                                 <h5>
-                                    Created At <br />
-                                    {formatDate(task.created_at)}
+                                    Created At: {formatDate(task.created_at)}
                                 </h5>
                                 <h6>
-                                    Status  <br />
-                                    {task.status}
+                                    Status: {task.status}
                                 </h6>
                             </Card.Body>
                         </Card>
@@ -84,8 +95,8 @@ class SingleTask extends PureComponent {
                     </div>
                 }
                 <div className={Styles.statusButton}>
-                {
-                      task && task.status === 'active' ?
+                    {
+                        task && task.status === 'active' ?
                             <Button
                                 variant="success"
                                 onClick={() => this.props.changeTaskStatus(task._id, { status: 'done' }, 'single')}
@@ -96,14 +107,14 @@ class SingleTask extends PureComponent {
                             <Button
                                 variant="warning"
                                 onClick={() => this.props.changeTaskStatus(task._id, { status: 'active' }, 'single')}
-                        
+
                             >
                                 <FontAwesomeIcon icon={faHistory} />
                                 Done
                             </Button>
                     }
                 </div>
-           
+
                 <div className={Styles.cardTask}>
                     <Button
                         variant="warning"
@@ -113,18 +124,18 @@ class SingleTask extends PureComponent {
                             icon={faEdit} />
                       Edit
                      </Button>
-                </div>
-                <div className={Styles.delete}>
-                    <Button
-                        variant="danger"
-                        onClick={this.onRemuve}
-                    >
-                        <FontAwesomeIcon
-                            icon={faTrash} />
+                    <span className={Styles.delet}>
+                        <Button
+                            variant="danger"
+                            onClick={this.onRemuve}
+                        >
+                            <FontAwesomeIcon
+                                icon={faTrash} />
                        Delete
                       </Button>
+                    </span>
+
                 </div>
-               
 
                 {
                     showEdit &&
@@ -135,6 +146,15 @@ class SingleTask extends PureComponent {
                         onClose={this.toggleTask}
                     />
 
+                }
+
+                {
+                    showConfirm &&
+                    <Confirm
+                        onSubmit={this.deleteConfirm}
+                        onClose={this.toggleConfirm}
+                        count={'this'}
+                    />
                 }
 
             </>

@@ -24,3 +24,12 @@
 .data{
     font-size: 12px;
 }
+.check{
+
+    width: 18px;
+    height: 18px;
+    position: relative;
+    margin: 20px auto;
+    box-shadow: inset 0px 1px 1px rgb(255, 245, 190), 0px 1px 3px rgba(0,0,0,0.5);
+
+}
