@@ -24,11 +24,17 @@ class Contacts extends Component {
     handleclick = () => {
 
         let { name, email, message } = this.state;
-
-        if (!email || !name || !message) {
+        if (!name || !email) {
             this.setState({
-                formerror: "! the introduction field must not be empty"
+                formerror: "! the name and email filed must not be empty"
             })
+        }
+
+        if (!message) {
+            this.setState({
+                formerror: "! the mesage filed must not be empty"
+            })
+            return
         }
         let mesagdata = {
             name,
@@ -36,7 +42,6 @@ class Contacts extends Component {
             message
         }
         this.props.sendMessage(mesagdata)
-
 
     }
 

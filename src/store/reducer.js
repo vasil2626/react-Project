@@ -10,6 +10,7 @@ let defaultState = {
     sendMessage: false,
     edidTaskSuccess: false,
     sendForm: false,
+    mesageFall: null,
     loading: false
 }
 
@@ -160,6 +161,7 @@ let reducer = (state = defaultState, action) => {
         case actionTypes.SEND_MESAGE_SUCCESS: {
             return {
                 ...state,
+                mesageFall: action.error,
                 sendForm: true,
                 loading: false,
                 successMessage: 'Message sent successfully  📩',
