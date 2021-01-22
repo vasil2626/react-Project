@@ -17,7 +17,7 @@ function Confirm(props) {
         <Modal.Title>
           Ar you sure to remov
            {' ' + props.count + ' '}
-           tasks
+           task
            </Modal.Title>
       </Modal.Header>
       <Modal.Footer>
