@@ -24,10 +24,18 @@ class Contacts extends Component {
     handleclick = () => {
 
         let { name, email, message } = this.state;
-        if (!name || !email) {
+      
+        if (!name ) {
             this.setState({
-                formerror: "! the name and email filed must not be empty"
+                formerror: "! the name  filed must not be empty"
             })
+            return
+        }
+        if (!email) {
+            this.setState({
+                formerror: "! the email filed must not be empty"
+            })
+            return
         }
 
         if (!message) {
